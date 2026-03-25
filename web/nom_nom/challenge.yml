@@ -1,0 +1,50 @@
+name: "Nom Nom"
+author: "xRedCrystalx"
+category: "web"
+description: |
+  The NomNom Sandwich Lab's kitchen is secure - or so they claim.
+
+  Their security is as layered as their sandwiches, but can you find the perfect slice through?
+attribution: "xRedCrystalx"
+value: 25
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{dont_trust_uuids}"
+  flag_type: "7"
+  challenge_type: "web"
+  duration: 1800
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "web"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/web/nom-nom
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+    pod.env[0].name=SMTP_USER
+    pod.env[0].value=noreply@dragonsec.si
+    pod.env[1].name=SMTP_PWD
+    pod.env[1].valueFrom.secretKeyRef.name=nom-nom-secret
+    pod.env[1].valueFrom.secretKeyRef.key=SMTP_PASS
+    volumes[0].name=db
+    volumes[0].path=/app/db
+    volumes[0].size=50Mi
+    flag.envkey=FLAG
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- web
+- hard
+
+files:
+- nom_nom.zip
+
+state: visible
+version: "0.1"

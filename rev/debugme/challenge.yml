@@ -1,0 +1,22 @@
+name: "debugme"
+author: "Riggle"
+category: "rev"
+
+description: |
+  Do I look like I know what a debugger is?
+
+value: 5
+type: "standard"
+
+files:
+  - "debugme.tar.gz"
+
+flags:
+  - "dctf{7r4C1N9_c4lls_1S_v3ry_US3fUL_F0r_r3v3Rs3_3n91n33R1ng}"
+
+tags:
+  - rev
+  - easy
+
+state: "visible"
+version: "0.1"

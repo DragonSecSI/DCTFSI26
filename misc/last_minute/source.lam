@@ -1,0 +1,91 @@
+tri := ^ x y z . ^ p . p x y z ;
+fst := ^ p . p (^ x y z . x) ;
+snd := ^ p . p (^ x y z . y) ;
+thd := ^ p . p (^ x y z . z) ;
+
+p := ^ x y . ^ p . p x y ;
+pf := ^ p . p (^ x y . x) ;
+ps := ^ p . p (^ x y . y) ;
+
+0 := ^ f x . x ;
+1 := ^ f x . f 0 x ;
+2 := ^ f x . f 1 (f 0 x) ;
+3 := ^ f x . f 2 (f 1 (f 0 x)) ;
+4 := ^ f x . f 3 (f 2 (f 1 (f 0 x))) ;
+succ := ^ n . ^ f x . f n (n f x);
+pred := ^ n . n (^ m r . m) 0 ;
+5 := succ 4 ;
+6 := succ 5 ;
+7 := succ 6 ;
+8 := succ 7 ;
+9 := succ 8 ;
+10 := succ 9 ;
+true := ^ x y . x ;
+false := ^ x y . y ;
+and := ^ a b . a b a ;
+:constant Z
+:constant S
+show := ^ n . n (^ m r . S r) Z ;
++ := ^ n k . n (^ m r . succ r) k ;
+* := ^ n k . n (^ m r . + k r) 0 ;
+- := ^ n k . k (^ m r . pred r) n ;
+d0 := ^ i j . + (* i 10) j ;
+100 := * 10 10 ;
+16 := * 4 4 ;
+d1 := ^ i j . + (d0 i j) 100 ;
+
+-- sage: [(ord(c)+k) % 128 for k, c in zip([51, 72, 115, 44]*4, 'dctf{14M6D4C4Lc}')] ;
+-- [23, 43, 103, 18, 46, 121, 39, 121, 105, 12, 39, 111, 103, 20, 86, 41] ;
+
+encflag :=
+ (p (d0 2 3)
+ (p (d0 4 3)
+ (p (d1 0 3)
+ (p (d0 1 8)
+ (p (d0 4 6)
+ (p (d1 2 1)
+ (p (d0 3 9)
+ (p (d1 2 1)
+ (p (d1 0 5)
+ (p (d0 1 2)
+ (p (d0 3 9)
+ (p (d1 1 1)
+ (p (d1 0 3)
+ (p (d0 2 0)
+ (p (d0 8 6)
+ (p (d0 4 1)
+ 0)))))))))))))))) ;
+
+key := ^ lst .
+ (p (d0 5 1)
+ (p (d0 7 2)
+ (p (d1 1 5)
+ (p (d0 4 4)
+ lst)))) ;
+
+fullkey := 4 (^ m r . key r) 0 ;
+
+iszero := ^ n . n (^ m r . false) true ;
+<= := ^ n m . iszero (- n m) ;
+< := ^ n m . <= (succ n) m ;
+== := ^ n m . and (<= n m) (<= m n) ;
+
+128 := * 8 (+ 8 8) ;
+m128 := ^ a . (< a 128) a (- a 128) ;
++128 := ^ a b . m128 (+ a b) ;
+
+
+foldlist2 := ^ g x l1 l2 . thd (16
+(^ m r .
+    (tri
+        (ps (fst r))
+        (ps (snd r))
+        (g (pf (fst r)) (pf (snd r)) (thd r))))
+(tri l1 l2 x)) ;
+
+addlist := foldlist2 (^ x y acc . (p (+128 x y) acc)) 0 ;
+eqlist := foldlist2 (^ x y acc . (and (== x y) acc)) true ;
+revlist := foldlist2 (^ x y acc . (p y acc)) 0 0 ;
+
+test := ^ flag . eqlist encflag (revlist (addlist flag fullkey)) ;
+

@@ -1,0 +1,21 @@
+name: "Script Kitty"
+author: "zen"
+category: "hardware"
+description: |
+  I've got an USB mouse app on my phone, so I can play Cookie Clicker anywhere!
+  But some of my scripts seem to be pushing the wrong buttons...
+
+attribution: "zen"
+value: 5
+logic: any
+type: "standard"
+
+flags:
+- "dctf{jUsT_aN_1nnOcEnT_fL4G}"
+
+tags:
+- hardware
+- easy
+
+state: visible
+version: "1.0"

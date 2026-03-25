@@ -1,0 +1,103 @@
+// server_herring.hex — Red Herring: same exploit path, different flag
+//
+// Identical program structure to server.hex.
+// The flag embedded here is a decoy: dct{this_is_not_a_rev_challenge}
+//
+// === PROGRAM LAYOUT ===
+//
+//   pc= 0  LOADL gp5, 0x42      F0542000   secret (CMP operand — irrelevant!)
+//   pc= 1  LOADL gp6, 0x01      F0601000   increment constant
+//   pc= 2  LOADL gp7, 0x05      F0705000   target counter C=5
+//   pc= 3  LOADL gp4, 0x00      F0400000   counter init = 0
+//   --- loop (pc=4) ---
+//   pc= 4  LOADM gp1, [0xFE]    E01FE000   read input
+//   pc= 5  SUB   gp1,gp4->gp3   20104030   [flags[2]=1 iff input==counter]
+//   pc= 6  CMP   gp1, gp5       C0105000   [only flags[1:0]!]
+//   pc= 7  JMPEQ pc=12          A00000C0   stale flags[2] -> granted_check
+//   pc= 8  LOADL gp0, 0         F0000000   DENIED
+//   pc= 9  MOVM  gp0, [0xFF]    D00FF000
+//   pc=10  ADD   gp4,gp6->gp4   10406040   counter++
+//   pc=11  JMP   pc=4           90400000
+//   --- granted_check (pc=12) ---
+//   pc=12  SUB   gp4,gp7->gp3   20407030   [flags[2]=1 iff counter==C]
+//   pc=13  CMP   gp4, gp7       C0407000   [only flags[1:0]!]
+//   pc=14  JMPEQ pc=19          A0000130   stale flags[2] -> flag (iff counter==C)
+//   pc=15  LOADL gp0, 0         F0000000   DENIED (right trigger, wrong time)
+//   pc=16  MOVM  gp0, [0xFF]    D00FF000
+//   pc=17  ADD   gp4,gp6->gp4   10406040   counter++
+//   pc=18  JMP   pc=4           90400000
+//   --- flag output (pc=19..72) ---
+F0542000
+F0601000
+F0705000
+F0400000
+E01FE000
+20104030
+C0105000
+A00000C0
+F0000000
+D00FF000
+10406040
+90400000
+20407030
+C0407000
+A0000130
+F0000000
+D00FF000
+10406040
+90400000
+F0264000
+D02FF000
+F0263000
+D02FF000
+F0274000
+D02FF000
+F0266000
+D02FF000
+F027B000
+D02FF000
+F0263000
+D02FF000
+F0275000
+D02FF000
+F0273000
+D02FF000
+F0274000
+D02FF000
+F026F000
+D02FF000
+F026D000
+D02FF000
+F025F000
+D02FF000
+F0273000
+D02FF000
+F0269000
+D02FF000
+F026C000
+D02FF000
+F0269000
+D02FF000
+F0263000
+D02FF000
+F026F000
+D02FF000
+F026E000
+D02FF000
+F025F000
+D02FF000
+F0269000
+D02FF000
+F0273000
+D02FF000
+F025F000
+D02FF000
+F0266000
+D02FF000
+F0275000
+D02FF000
+F026E000
+D02FF000
+F027D000
+D02FF000
+00000000

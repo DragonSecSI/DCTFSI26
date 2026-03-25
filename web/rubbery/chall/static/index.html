@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDown Editor and Renderer - because the world really needed another markup language</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body style="height: 100vh; margin: 0; padding: 0; display: flex; flex-direction: column; overflow: hidden;">
+    <div class="header">
+        <h1>MyDown - better than markdown!</h1>
+    </div>
+    <div class="container" style="display: flex; flex: 1; overflow: hidden;">
+        <div class="editor-pane" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #ddd;">
+            <div class="controls">
+                <button id="render-btn">Render</button>
+            </div>
+            <pre id="editor" style="flex: 1; overflow: hidden;">
+| This is a title
+
+|| This is a subtitle
+
+This is a paragraph.
+
+This is a second paragraph.
+This is a line break within a paragraph.
+
+|| This is a second subtitle
+
+/code:python
+def random_int() -> int:
+    return 4  # Chosen by a fair dice roll, guaranteed to be random
+code/
+
+||| This is a 3rd level subtitle
+
+This is some math:
+
+/math
+\mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+\frac{\partial X}{\partial u} &  \frac{\partial Y}{\partial u} & 0 \\
+\frac{\partial X}{\partial v} &  \frac{\partial Y}{\partial v} & 0
+\end{vmatrix}
+math/
+
+            </pre>
+        </div>
+        <div class="preview-pane" id="preview" style="flex: 1; display: flex; flex-direction: column; overflow: auto;">
+            <div id="rendered-content" style="padding: 20px; flex: 1; overflow: auto;">
+                <p>Your rendered mydown will appear here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

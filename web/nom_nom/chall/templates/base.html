@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or "Nom Nom Sandwich Lab" }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="scene scene-a"></div>
+    <div class="scene scene-b"></div>
+    <img class="floating-sandwich left" src="{{ url_for('static', filename='images/sandwich-left.svg') }}" alt="">
+    <img class="floating-sandwich right" src="{{ url_for('static', filename='images/sandwich-right.svg') }}" alt="">
+
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('index') }}">
+            <span>Nom Nom</span>
+            <small>Sandwich Lab</small>
+        </a>
+        <nav class="site-nav">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('request_reset') }}">Reset Password</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <section class="alerts">
+                    {% for category, message in messages %}
+                        <article class="alert {{ category }}">{{ message }}</article>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>Nom Nom Sandwich Lab | stacked flavors, stacked tokens.</p>
+    </footer>
+</body>
+</html>

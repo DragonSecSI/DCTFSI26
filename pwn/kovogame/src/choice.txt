@@ -1,0 +1,400 @@
+Berlin
+Madrid
+Paris
+Rome
+Earth
+Mars
+Jupiter
+Saturn
+Oxygen
+Nitrogen
+Carbon Dioxide
+Hydrogen
+Charles Dickens
+William Shakespeare
+Mark Twain
+Jane Austen
+Au
+Ag
+Fe
+Pb
+0°C
+50°C
+100°C
+200°C
+Van Gogh
+Picasso
+Da Vinci
+Rembrandt
+Tissue
+Cell
+Organ
+Organism
+Venus
+Mars
+Jupiter
+Saturn
+Spanish
+Portuguese
+English
+French
+Atlantic
+Indian
+Arctic
+Pacific
+Albert Einstein
+Isaac Newton
+Galileo
+Copernicus
+Beijing
+Seoul
+Tokyo
+Bangkok
+Dollar
+Euro
+Pound
+Yen
+Huxley
+Orwell
+Bradbury
+Kafka
+0°C
+32°F
+100°C
+50°C
+Oxygen
+Hydrogen
+Carbon
+Nitrogen
+Amazon
+Nile
+Yangtze
+Mississippi
+Diamond
+Gold
+Iron
+Quartz
+1912
+1905
+1898
+1920
+H2O
+CO2
+O2
+H2O2
+Venus
+Earth
+Mercury
+Mars
+Tomato
+Avocado
+Pepper
+Onion
+Madrid
+Rome
+Paris
+Lisbon
+Newton
+Einstein
+Galileo
+Curie
+Vatican City
+Monaco
+Malta
+Liechtenstein
+Arabic
+English
+French
+Spanish
+Africa
+Antarctica
+Asia
+Europe
+Nucleus
+Mitochondria
+Ribosome
+Endoplasmic Reticulum
+Earth
+Mars
+Saturn
+Jupiter
+Venus
+Mercury
+Mars
+Jupiter
+Sydney
+Canberra
+Melbourne
+Brisbane
+Oxygen
+Nitrogen
+Carbon Dioxide
+Hydrogen
+Basalt
+Schist
+Diamond
+Granite
+Heart
+Lungs
+Brain
+Liver
+Jane Austen
+Emily Bronte
+Charlotte Bronte
+Mary Shelley
+Toronto
+Ottawa
+Vancouver
+Montreal
+Elephant
+Blue Whale
+Giraffe
+Great White Shark
+Cold
+Warm
+Numb
+Cool
+πr^2
+2πr
+2r
+πd
+Hippopotamus
+Giraffe
+Elephant
+Rhino
+Monet
+Van Gogh
+Picasso
+Dali
+Reptile
+Mammal
+Amphibian
+Bird
+Si
+Ag
+Au
+Pb
+China
+Japan
+South Korea
+Thailand
+Sahara
+Arabian
+Gobi
+Antarctic
+George Washington
+Abraham Lincoln
+Thomas Jefferson
+John Adams
+Digestion
+Circulation
+Respiration
+Reproduction
+Moscow
+St. Petersburg
+Kiev
+Novosibirsk
+Nuclear
+Chemical
+Mechanical
+Thermal
+K2
+Kangchenjunga
+Everest
+Makalu
+Heart
+Skin
+Liver
+Lung
+Earth
+Jupiter
+Mars
+Saturn
+Edison
+Bell
+Tesla
+Marconi
+300,000 km/s
+150,000 km/s
+450,000 km/s
+500,000 km/s
+Humerus
+Femur
+Tibia
+Fibula
+Helium
+Hydrogen
+Oxygen
+Carbon
+Buzz Aldrin
+Neil Armstrong
+Yuri Gagarin
+John Glenn
+100°F
+150°F
+212°F
+180°F
+Cub
+Joey
+Pup
+Calf
+Mandarin
+Cantonese
+English
+Spanish
+Berlin
+Munich
+Frankfurt
+Hamburg
+Earth
+Saturn
+Jupiter
+Neptune
+Chickpeas
+Lentils
+Peas
+Beans
+English
+Mandarin
+Spanish
+Hindi
+Vitamin A
+Vitamin C
+Vitamin D
+Vitamin B12
+Red
+Yellow
+Blue
+Green
+Nairobi
+Mombasa
+Dodoma
+Kampala
+5
+6
+7
+8
+Cheetah
+Lion
+Horse
+Gazelle
+Force equals mass times acceleration
+An object at rest stays at rest
+For every action, there is an equal and opposite reaction
+Energy cannot be created or destroyed
+Photosynthesis
+Respiration
+Digestion
+Fermentation
+F. Scott Fitzgerald
+Mark Twain
+Ernest Hemingway
+John Steinbeck
+28
+30
+32
+34
+Iron
+Calcium
+Potassium
+Magnesium
+Santiago
+Buenos Aires
+Brasilia
+Montevideo
+Oxygen
+Nitrogen
+Carbon Dioxide
+Argon
+Area
+Diameter
+Circumference
+Radius
+Delhi
+Mumbai
+Kolkata
+Bangalore
+Photosynthesis
+Absorb water and nutrients
+Flowering
+Support the plant
+Oxygen
+Hydrogen
+Carbon
+Helium
+1/2 * base * height
+base * height
+base^2 * height
+2 * base * height
+Copenhagen
+Oslo
+Stockholm
+Helsinki
+Edison
+Tesla
+Bell
+Newton
+Flour
+Sugar
+Salt
+Yeast
+8
+9
+7
+6
+Bach
+Mozart
+Vivaldi
+Beethoven
+Seoul
+Busan
+Incheon
+Daegu
+Digestion
+Blood filtration
+Respiration
+Energy storage
+side^3
+side^2
+6 * side^2
+4/3 * π * radius^3
+Mars
+Earth
+Mercury
+Venus
+Yen
+Won
+Dollar
+Euro
+Humerus
+Femur
+Tibia
+Fibula
+1945
+1940
+1939
+1950
+Rice
+Wheat
+Corn
+Barley
+Cairo
+Alexandria
+Giza
+Luxor
+Pack
+Flock
+Herd
+School
+Mercury
+Venus
+Saturn
+Jupiter
+Fleming
+Pasteur
+Lister
+Hodgkin
+Arabic
+English
+Mandarin
+Spanish

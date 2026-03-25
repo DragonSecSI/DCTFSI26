@@ -1,0 +1,9 @@
+# Solution
+
+You needed to make an XML file that the program parses. 
+
+Since the name implies "Nessus" it is reasonable to assume, that the XML has to be from a Nessus scan export.
+
+The bot searches for "Browsable Web Directories" and looks at its description....so the title of the vulnerability has to be that, and the actual XSS has to be in the description of the vulnerability.
+
+You upload the XML file, and the bot just searches for it with it's cookie, where the flag is stored.

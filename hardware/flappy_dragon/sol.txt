@@ -1,0 +1,3 @@
+By reading a STM32H750 reference, one discovers that PH8, PH4 and PI11 are GPIO pins 20, 19, 18.
+By shorting them to ground, the D1CPRE register is set, which controls the system clock prescaler.
+In this way, the system clock can be slowed down enough to play the game comfortably.

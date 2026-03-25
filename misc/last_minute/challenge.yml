@@ -1,0 +1,23 @@
+name: "Last Minute"
+author: "klmn"
+category: "misc"
+description: |
+  If functions are pure, the reversing should be easy.
+
+attribution: "klmn"
+value: 25
+logic: any
+type: "standard"
+
+flags:
+- "dctf{14M6D4C4Lc}"
+
+tags:
+- misc
+- hard
+
+files:
+- chall.lam
+
+state: visible
+version: "1.0"

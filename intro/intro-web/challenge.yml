@@ -1,0 +1,38 @@
+name: "Intro Web"
+author: "aJuvan"
+category: "intro"
+description: "Introduction to web based challenges"
+attribution: "aJuvan"
+value: 1
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{hello_web_world}"
+  flag_type: "0"
+  challenge_type: "web"
+  duration: 300
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "web"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=ghcr.io/dragonsecsi/dctfsi26/web/intro-web
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=ghcr
+    flag.path=/flag.txt
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- web
+- baby
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

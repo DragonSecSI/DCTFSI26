@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% set cart_count = items | sum(attribute='qty') %}
+{% block content %}
+
+<div class="page-header-strip">
+    <h2>🛒 Your Shopping Cart</h2>
+</div>
+
+{% if items %}
+
+<!-- Cart summary table -->
+<div class="cart-wrap">
+    <table class="table table-bordered cart-table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th class="text-center">Qty</th>
+                <th class="text-right">Price each</th>
+                <th class="text-right">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><strong>{{ item.product.emoji }} {{ item.product.name }}</strong></td>
+                <td class="text-center">{{ item.qty }}</td>
+                <td class="text-right">€{{ "%.2f"|format(item.product.price) }}</td>
+                <td class="text-right">€{{ "%.2f"|format(item.subtotal) }}</td>
+                <td class="text-center">
+                    <form action="{{ url_for('remove_from_cart', product_id=loop.index) }}" method="POST">
+                        <button type="submit" class="btn btn-xs btn-danger">✕ Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                <td class="text-right"><strong class="total-amount">€{{ "%.2f"|format(total) }}</strong></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="cart-note">
+        <p>📝 <strong>Note from Baka Lena:</strong> <em>Once you place your order, I will call you to arrange delivery. Payment is cash on delivery. Thank you for your trust! — Lena</em></p>
+    </div>
+</div>
+
+<!-- Checkout form -->
+<div class="checkout-form-wrap">
+    <h3 class="checkout-form-title">📋 Complete Your Order</h3>
+    <p class="checkout-form-subtitle">Fill in your details and Baka Lena will call you to confirm delivery.</p>
+
+    <form action="{{ url_for('checkout') }}" method="POST" id="checkout-form">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="field-group">
+                    <label for="name">Your Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" class="field-input"
+                           placeholder="e.g. Janez Novak" required maxlength="80">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="field-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <div class="phone-wrap">
+                        <span class="phone-icon">📞</span>
+                        <input type="tel" id="phone" name="phone" class="field-input field-input--phone"
+                               placeholder="+386 31 123 456" required maxlength="30"
+                               pattern="[\+\d\s\-\(\)]{6,}">
+                    </div>
+                    <small class="field-hint">Baka Lena will call this number to confirm your order.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label for="address">Delivery Address <span class="required">*</span></label>
+            <input type="text" id="address" name="address" class="field-input"
+                   placeholder="Street, house number, city" required maxlength="120">
+        </div>
+
+        <div class="field-group">
+            <label for="notes">Special requests <span class="optional">(optional)</span></label>
+            <textarea id="notes" name="notes" class="field-input field-textarea" rows="3"
+                      placeholder="e.g. Please put extra labels on the jars, gift wrapping, leave at the door…" maxlength="300"></textarea>
+        </div>
+
+        <div class="checkout-summary-row">
+            <div class="checkout-total-label">Order total:</div>
+            <div class="checkout-total-value">€{{ "%.2f"|format(total) }}</div>
+            <div class="checkout-cod-badge">💵 Cash on Delivery</div>
+        </div>
+
+        <div class="checkout-form-actions">
+            <a href="{{ url_for('index') }}" class="nav-btn">← Keep Shopping</a>
+            <button type="submit" class="add-btn checkout-btn">Place Order 🍯</button>
+        </div>
+
+    </form>
+</div>
+
+{% else %}
+<div class="empty-cart">
+    <p style="font-size: 4em;">🛒</p>
+    <h3>Your cart is empty!</h3>
+    <p>Go back and pick some jams or kompots. Baka Lena has plenty! 🫙</p>
+    <a href="{{ url_for('index') }}" class="add-btn">← Go to Shop</a>
+</div>
+{% endif %}
+
+{% endblock %}

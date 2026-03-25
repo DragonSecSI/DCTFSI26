@@ -1,0 +1,39 @@
+name: "mysh"
+author: "VrumVrum"
+category: "pwn"
+description: "Aaah! Why do windows keep popping up? I will never use GUI again... In fact here is a shell."
+attribution: "VrumVrum"
+value: 10
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{windows_are_a_joke_but_backdoors_are_fun}"
+  flag_type: "7"
+  challenge_type: "socket"
+  duration: 300
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "pwn"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/pwn/mysh
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+    pod.securityContext.readOnlyRootFilesystem=false
+    flag.path=/flag.txt
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- pwn
+- medium
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: foods
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    image: registry.dctf.si/web/sqli-defense
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: foods
+      FLAG: dctf{demo_flag}
+    ports:
+      - "8000:8000"

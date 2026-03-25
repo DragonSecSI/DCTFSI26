@@ -1,0 +1,727 @@
+:root {
+    --cream: #fdf6e3;
+    --brown-dark: #4a2c0a;
+    --brown-mid: #7a4a1e;
+    --brown-light: #c8956c;
+    --green-herb: #5a7a3a;
+    --red-jam: #c0392b;
+    --gold: #d4a017;
+    --border-color: #c8a06a;
+    --card-bg: #fffdf5;
+    --text-main: #3a2010;
+}
+
+/* 
+	Base
+*/
+body {
+    background-color: #e8ddc8;
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(180,140,80,0.06) 10px,
+            rgba(180,140,80,0.06) 20px
+        );
+    font-family: 'Lora', Georgia, serif;
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+}
+
+/* 
+	Top bar (marquee)
+*/
+#top-bar {
+    background-color: var(--red-jam);
+    color: #fff;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.95em;
+    padding: 5px 0;
+    letter-spacing: 0.03em;
+}
+
+/* 
+	Header
+*/
+#header {
+    background: linear-gradient(135deg, #5a3010 0%, #8a5028 50%, #5a3010 100%);
+    border-bottom: 4px solid var(--gold);
+    padding: 18px 0 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+#header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+#logo-jar {
+    font-size: 3.2em;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+#site-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 0.02em;
+}
+
+#site-tagline {
+    color: #f0d9a0;
+    margin: 2px 0 0;
+    font-size: 0.95em;
+}
+
+#header-nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* 
+	Nav buttons
+*/
+.nav-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    background: var(--cream);
+    color: var(--brown-dark);
+    border: 2px solid var(--gold);
+    border-radius: 3px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1em;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    position: relative;
+}
+.nav-btn:hover {
+    background: var(--gold);
+    color: var(--brown-dark);
+    text-decoration: none;
+}
+
+.cart-btn { font-weight: bold; }
+
+.cart-badge {
+    display: inline-block;
+    background: var(--red-jam);
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.75em;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 4px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+/* 
+	Ribbon
+*/
+#ribbon {
+    background: var(--green-herb);
+    color: #e8f5d0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.9em;
+    text-align: center;
+    padding: 6px 0;
+    letter-spacing: 0.08em;
+    border-bottom: 2px solid #3a5a20;
+}
+
+/* 
+	Main content area
+*/
+#main-content {
+    padding-top: 28px;
+    padding-bottom: 40px;
+}
+
+/* 
+	Welcome banner
+*/
+#welcome-banner {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.25);
+}
+
+#welcome-banner h2 {
+    font-family: 'Lora', serif;
+    color: var(--brown-mid);
+    margin-top: 0;
+    font-size: 1.6em;
+}
+
+#welcome-banner p {
+    line-height: 1.7;
+    color: #4a3020;
+}
+
+#grandma-photo {
+    background: #f5e8d0;
+    border: 3px solid var(--border-color);
+    border-radius: 4px;
+    padding: 18px 10px 10px;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 4px 4px 0 rgba(120,80,30,0.2);
+}
+
+#grandma-photo span {
+    font-size: 5em;
+    display: block;
+    line-height: 1;
+}
+
+/* 
+	Section divider
+*/
+#divider-strip {
+    text-align: center;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2em;
+    color: var(--brown-mid);
+    margin: 10px 0 20px;
+    letter-spacing: 0.1em;
+}
+
+/* 
+	Product cards
+*/
+#products-row {
+    margin-bottom: 28px;
+}
+
+.product-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 18px 16px 14px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.22);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 5px 0 rgba(180,140,80,0.35);
+}
+
+.product-emoji {
+    font-size: 2.8em;
+    margin-bottom: 6px;
+    line-height: 1;
+}
+
+.product-name {
+    font-family: 'Lora', serif;
+    font-size: 1.15em;
+    font-weight: 700;
+    color: var(--brown-dark);
+    margin: 4px 0 6px;
+}
+
+.product-desc {
+    font-size: 0.88em;
+    color: #6a4a30;
+    line-height: 1.5;
+    min-height: 42px;
+}
+
+.product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.product-price {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.4em;
+    color: var(--green-herb);
+    font-weight: bold;
+}
+
+/* 
+	Add to cart button
+*/
+.add-btn {
+    display: inline-block;
+    background: var(--green-herb);
+    color: #fff;
+    border: 2px solid #3a5a20;
+    border-radius: 3px;
+    padding: 6px 14px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.95em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.add-btn:hover {
+    background: #3a5a20;
+    color: #fff;
+    text-decoration: none;
+}
+
+.checkout-btn {
+    background: var(--red-jam);
+    border-color: #8a2018;
+    font-size: 1.1em;
+    padding: 9px 22px;
+}
+.checkout-btn:hover {
+    background: #8a2018;
+    color: #fff;
+}
+
+/* 
+	Trust strip
+*/
+#trust-strip {
+    background: #f5e8d0;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 16px 0;
+    margin-top: 10px;
+}
+
+.trust-item {
+    font-size: 0.9em;
+    padding: 8px 4px;
+    line-height: 1.5;
+}
+
+.trust-item:first-child { font-size: 1.5em; }
+
+/* 
+	Cart page
+*/
+.page-header-strip {
+    background: var(--brown-mid);
+    color: var(--cream);
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin-bottom: 22px;
+}
+
+.page-header-strip h2 {
+    margin: 0;
+    font-family: 'Lora', serif;
+}
+
+.cart-wrap {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 22px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.2);
+}
+
+.cart-table thead {
+    background: #e8d8b0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.05em;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cart-note {
+    margin-top: 18px;
+    background: #fff9ea;
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    font-size: 0.9em;
+    color: #5a4020;
+}
+
+/* 
+	Empty cart
+*/
+.empty-cart {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 50px 30px;
+    text-align: center;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.2);
+}
+
+/* 
+	Thanks page
+*/
+#thanks-page {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 50px 30px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.2);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* 
+	Footer
+*/
+#footer {
+    background: var(--brown-dark);
+    color: #d4b890;
+    padding: 28px 0 16px;
+    margin-top: 30px;
+    border-top: 4px solid var(--gold);
+    font-size: 0.9em;
+}
+
+#footer h4 {
+    color: var(--cream);
+    font-family: 'Patrick Hand', cursive;
+    margin-bottom: 8px;
+}
+
+#footer a {
+    color: #f0d9a0;
+}
+
+#footer-logo {
+    font-size: 2.5em;
+    margin: 0 0 8px;
+}
+
+#footer hr {
+    border-color: #7a5030;
+}
+
+/* 
+	Utility
+*/
+a:hover { text-decoration: underline; }
+
+/*
+	Checkout form
+*/
+
+.checkout-form-wrap {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 26px 28px 22px;
+    margin-top: 24px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.22);
+}
+
+.checkout-form-title {
+    font-family: 'Lora', serif;
+    color: var(--brown-mid);
+    margin-top: 0;
+    margin-bottom: 4px;
+    font-size: 1.3em;
+}
+
+.checkout-form-subtitle {
+    color: #7a5030;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.field-group {
+    margin-bottom: 18px;
+}
+
+.field-group label {
+    display: block;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.05em;
+    color: var(--brown-dark);
+    margin-bottom: 5px;
+}
+
+.required { color: var(--red-jam); }
+.optional  { color: #a08060; font-size: 0.85em; }
+
+.field-input {
+    width: 100%;
+    padding: 8px 11px;
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    background: #fffef8;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.95em;
+    color: var(--text-main);
+    box-sizing: border-box;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: var(--brown-mid);
+    box-shadow: 0 0 0 3px rgba(122,74,30,0.12);
+}
+
+.field-textarea {
+    resize: vertical;
+    min-height: 72px;
+}
+
+.phone-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.phone-icon {
+    position: absolute;
+    left: 10px;
+    font-size: 1.05em;
+    pointer-events: none;
+}
+
+.field-input--phone {
+    padding-left: 34px;
+}
+
+.field-hint {
+    display: block;
+    margin-top: 4px;
+    color: #9a7050;
+    font-size: 0.82em;
+}
+
+.checkout-summary-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f5e8d0;
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    padding: 12px 16px;
+    margin: 20px 0 18px;
+    flex-wrap: wrap;
+}
+
+.checkout-total-label {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.05em;
+    color: var(--brown-mid);
+}
+
+.checkout-total-value {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.6em;
+    color: var(--green-herb);
+    font-weight: bold;
+    flex: 1;
+}
+
+.checkout-cod-badge {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 4px 10px;
+    font-size: 0.88em;
+    color: var(--brown-mid);
+    font-family: 'Patrick Hand', cursive;
+}
+
+.checkout-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/*
+   Thanks / confirmation page
+*/
+
+.thanks-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.thanks-header {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    text-align: center;
+    padding: 28px 24px 22px;
+    margin-bottom: 22px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.22);
+}
+
+.thanks-jars {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.thanks-header h2 {
+    font-family: 'Lora', serif;
+    color: var(--green-herb);
+    margin: 0 0 10px;
+    font-size: 1.7em;
+}
+
+.thanks-sub {
+    color: #5a4020;
+    font-size: 1em;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.thanks-body {
+    margin-bottom: 20px;
+}
+
+.thanks-section {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 18px 18px 14px;
+    margin-bottom: 18px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.15);
+}
+
+.thanks-section-title {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1em;
+    color: var(--brown-mid);
+    margin-top: 0;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 7px;
+}
+
+.thanks-table thead {
+    background: #e8d8b0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1em;
+}
+
+.cod-note {
+    margin: 10px 0 0;
+    font-size: 0.9em;
+    color: #5a4020;
+}
+
+/* Delivery detail list */
+.delivery-dl {
+    margin: 0;
+}
+
+.delivery-dl dt {
+    font-family: 'Patrick Hand', cursive;
+    color: var(--brown-mid);
+    font-size: 0.88em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 10px;
+}
+
+.delivery-dl dd {
+    margin-left: 0;
+    color: var(--text-main);
+    font-size: 0.97em;
+    border-bottom: 1px dotted #d8c0a0;
+    padding-bottom: 6px;
+}
+
+/* Lena's note card */
+.lena-note-card {
+    background: #fffce8;
+    border: 2px dashed var(--gold);
+    border-radius: 4px;
+    padding: 16px 18px 10px;
+    font-size: 0.93em;
+    color: #5a3a10;
+    line-height: 1.6;
+    position: relative;
+}
+
+.lena-note-card::before {
+    content: "📌";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4em;
+}
+
+.lena-sig {
+    text-align: right;
+    font-weight: bold;
+    color: var(--brown-mid);
+    margin: 6px 0 0;
+    font-style: normal;
+}
+
+/* Steps */
+.thanks-steps {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px 16px 16px;
+    box-shadow: 3px 3px 0 rgba(180,140,80,0.15);
+    margin-bottom: 10px;
+}
+
+.step-item {
+    padding: 8px 4px;
+}
+
+.step-num {
+    display: inline-block;
+    background: var(--brown-mid);
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.9em;
+    margin-bottom: 6px;
+}
+
+.step-icon {
+    font-size: 1.8em;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.step-label {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.9em;
+    color: var(--brown-mid);
+    line-height: 1.4;
+}

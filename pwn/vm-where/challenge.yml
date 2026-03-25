@@ -1,0 +1,38 @@
+name: "VM Where?"
+author: "aJuvan"
+category: "pwn"
+description: "Can't take this price increases."
+attribution: "aJuvan"
+value: 25
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{the_roi_on_this_will_be_insane}"
+  flag_type: "7"
+  challenge_type: "socket"
+  duration: 300
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "pwn"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/pwn/vm-where
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+    flag.path=/app/flag.txt
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- pwn
+- hard
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

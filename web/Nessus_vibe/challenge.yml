@@ -1,0 +1,49 @@
+name: "Nessus Vibe"
+author: "MartinCp"
+category: "web"
+description: "I vibe coded my Nessus parsing application. I think it might have some vulnerabilities?"
+attribution: "MartinCo"
+value: 5
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{nessus_scans_are_not_a_pentest}"
+  flag_type: "7"
+  challenge_type: "web"
+  duration: 600
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "web-bot"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/web/nessus
+    image.tag=latest
+    image.bottag=bot
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+    pod.volumes[0].name=db
+    pod.volumes[0].path=/app/db
+    pod.volumes[0].size=100Mi
+    pod.volumes[1].name=tmp
+    pod.volumes[1].path=/tmp
+    pod.volumes[1].size=100Mi
+    bot.volumes[0].name=tmp
+    bot.volumes[0].path=/tmp
+    bot.volumes[0].size=100Mi
+    flag.bot.envkey=FLAG
+    flag.bot.targetenvkey=TARGET_URL
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- web
+- easy
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

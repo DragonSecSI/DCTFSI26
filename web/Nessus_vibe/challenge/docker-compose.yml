@@ -1,0 +1,25 @@
+services:
+  web:
+    image: registry.dctf.si/web/nessus:latest
+    build:
+      context: .
+      platforms: ["linux/amd64"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+
+  bot:
+    image: registry.dctf.si/web/nessus:bot
+    build:
+      context: ./bot
+      platforms: ["linux/amd64"]
+    environment:
+      - FLAG=dctf{fake_flag}
+      - TARGET_URL=http://web:8000/
+    depends_on:
+      - web
+    restart: unless-stopped

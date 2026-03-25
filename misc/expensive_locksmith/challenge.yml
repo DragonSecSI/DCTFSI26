@@ -1,0 +1,122 @@
+name: "Expensive Locksmith"
+author: "CraftByte"
+category: "misc"
+description: |
+  I lost my apartment building keyfob and the locksmith is
+  charging me an arm and a leg to replace it. Can you help
+  me so I don't have to pay the locksmith $200 for a new keyfob
+  next time I lose it?
+
+  I was able to get a trace of him programming a new keyfob for another
+  building, maybe you can find something useful in there.
+
+  Come pick up my keyfob at the registration desk, so you can get the correct data
+  for my building.
+
+  Note: This challenge should be solvable with any modern Android phone with NFC capabilities.
+  If your team doesn't have one, come to the registration desk and we can lend you one to use for the challenge.
+
+attribution: "CraftByte"
+value: 10
+logic: any
+type: "standard"
+
+# One flag per keyfob, 86 fobs total
+flags:
+- "dctf{4_tru3_cl4ss1c_3ded7acb055131ec}"
+- "dctf{4_tru3_cl4ss1c_049272a73b884f8f}"
+- "dctf{4_tru3_cl4ss1c_aa0936d104efe904}"
+- "dctf{4_tru3_cl4ss1c_c6413b00c3750ef9}"
+- "dctf{4_tru3_cl4ss1c_cf0c18938a059f3b}"
+- "dctf{4_tru3_cl4ss1c_c06b029858345e24}"
+- "dctf{4_tru3_cl4ss1c_8e0d78b5dabfe7bb}"
+- "dctf{4_tru3_cl4ss1c_ca30cae1109b1e86}"
+- "dctf{4_tru3_cl4ss1c_23142505f0a70970}"
+- "dctf{4_tru3_cl4ss1c_cb049388653d363c}"
+- "dctf{4_tru3_cl4ss1c_3858ecd911ba7256}"
+- "dctf{4_tru3_cl4ss1c_1d46e0334f618a7e}"
+- "dctf{4_tru3_cl4ss1c_b08d931c24e23e58}"
+- "dctf{4_tru3_cl4ss1c_b3a1bdc8767d8d7c}"
+- "dctf{4_tru3_cl4ss1c_3ab0231cec777773}"
+- "dctf{4_tru3_cl4ss1c_7d305b166b04a39d}"
+- "dctf{4_tru3_cl4ss1c_89a138d1c5f021eb}"
+- "dctf{4_tru3_cl4ss1c_7f3cfbd0fc8bfeb4}"
+- "dctf{4_tru3_cl4ss1c_ebc5c68fcd9c87ee}"
+- "dctf{4_tru3_cl4ss1c_7c8c3ef9dd5c9df9}"
+- "dctf{4_tru3_cl4ss1c_4096b43623b435c2}"
+- "dctf{4_tru3_cl4ss1c_676b6167fafbb3f0}"
+- "dctf{4_tru3_cl4ss1c_d600f002f5052224}"
+- "dctf{4_tru3_cl4ss1c_2fd0c5368160b077}"
+- "dctf{4_tru3_cl4ss1c_1e9ec9610de086d5}"
+- "dctf{4_tru3_cl4ss1c_a6a88d64ad5cd41d}"
+- "dctf{4_tru3_cl4ss1c_2bd81802c5792131}"
+- "dctf{4_tru3_cl4ss1c_81ed70b573440671}"
+- "dctf{4_tru3_cl4ss1c_1b9e714262c8903f}"
+- "dctf{4_tru3_cl4ss1c_0094e3321a41b606}"
+- "dctf{4_tru3_cl4ss1c_0b4aceaa4ceb39d9}"
+- "dctf{4_tru3_cl4ss1c_80683499bdb3e8f6}"
+- "dctf{4_tru3_cl4ss1c_53a4c1aad784d450}"
+- "dctf{4_tru3_cl4ss1c_ff425b5c53a2eda9}"
+- "dctf{4_tru3_cl4ss1c_cc80171e1591c313}"
+- "dctf{4_tru3_cl4ss1c_98a401be9ff83d96}"
+- "dctf{4_tru3_cl4ss1c_940d534c7e126a4a}"
+- "dctf{4_tru3_cl4ss1c_ce29ebb227aa5000}"
+- "dctf{4_tru3_cl4ss1c_7adfe2285f45adf1}"
+- "dctf{4_tru3_cl4ss1c_c1ced8ab8c99dbe1}"
+- "dctf{4_tru3_cl4ss1c_0e92a9288f64a79b}"
+- "dctf{4_tru3_cl4ss1c_49cbe1a6dccba041}"
+- "dctf{4_tru3_cl4ss1c_a95482f623c5348b}"
+- "dctf{4_tru3_cl4ss1c_c7dd3f66159a3d5e}"
+- "dctf{4_tru3_cl4ss1c_a85d14413a5006e7}"
+- "dctf{4_tru3_cl4ss1c_5cf616858183e9f2}"
+- "dctf{4_tru3_cl4ss1c_2727b4f99d0dd7f0}"
+- "dctf{4_tru3_cl4ss1c_c8517d697040c3df}"
+- "dctf{4_tru3_cl4ss1c_22dcb84f5546704e}"
+- "dctf{4_tru3_cl4ss1c_dff6a4184f975e28}"
+- "dctf{4_tru3_cl4ss1c_a32e8a5d68300a69}"
+- "dctf{4_tru3_cl4ss1c_b07a045b07aec1a6}"
+- "dctf{4_tru3_cl4ss1c_1bd232e9c631b26a}"
+- "dctf{4_tru3_cl4ss1c_a7abc281b98ac909}"
+- "dctf{4_tru3_cl4ss1c_33e0cb36d86937fa}"
+- "dctf{4_tru3_cl4ss1c_ed1767829a362129}"
+- "dctf{4_tru3_cl4ss1c_33ddfe596ccf2e37}"
+- "dctf{4_tru3_cl4ss1c_0b066f8c19b5a9b7}"
+- "dctf{4_tru3_cl4ss1c_ea2381507f9ad542}"
+- "dctf{4_tru3_cl4ss1c_a60db274f48fc345}"
+- "dctf{4_tru3_cl4ss1c_65da118f9c6e7687}"
+- "dctf{4_tru3_cl4ss1c_36937b4ed9a87d2d}"
+- "dctf{4_tru3_cl4ss1c_2247fd6059b88907}"
+- "dctf{4_tru3_cl4ss1c_26a4164c300a09f8}"
+- "dctf{4_tru3_cl4ss1c_7abf2e376967a6c1}"
+- "dctf{4_tru3_cl4ss1c_c3775c52f2f5d789}"
+- "dctf{4_tru3_cl4ss1c_93559dce1aeb675a}"
+- "dctf{4_tru3_cl4ss1c_75ae9aa9e6e2e98c}"
+- "dctf{4_tru3_cl4ss1c_04dec29f9976efe2}"
+- "dctf{4_tru3_cl4ss1c_dc0c77c7adcf5b01}"
+- "dctf{4_tru3_cl4ss1c_c413dcdd15c95011}"
+- "dctf{4_tru3_cl4ss1c_88c2efca26a73968}"
+- "dctf{4_tru3_cl4ss1c_d775bb41ad2735fe}"
+- "dctf{4_tru3_cl4ss1c_15c6d31b284a830b}"
+- "dctf{4_tru3_cl4ss1c_02a25bfcfad0c9ba}"
+- "dctf{4_tru3_cl4ss1c_9faa32d1fa310933}"
+- "dctf{4_tru3_cl4ss1c_36bec38642cc6806}"
+- "dctf{4_tru3_cl4ss1c_9a303f24a2388448}"
+- "dctf{4_tru3_cl4ss1c_293a77c799394def}"
+- "dctf{4_tru3_cl4ss1c_3771f6ede3b7c555}"
+- "dctf{4_tru3_cl4ss1c_6be99574322be26d}"
+- "dctf{4_tru3_cl4ss1c_d0dacc4b57f89e67}"
+- "dctf{4_tru3_cl4ss1c_6bf596c4f00bbc2c}"
+- "dctf{4_tru3_cl4ss1c_3fdd2b2f14ad2b83}"
+- "dctf{4_tru3_cl4ss1c_4b4c19c28fc39a97}"
+- "dctf{4_tru3_cl4ss1c_53503f0cc8af5b78}"
+
+
+tags:
+- misc
+- medium
+
+files:
+- keyfob.trace
+
+state: visible
+version: "1.0"

@@ -1,0 +1,12 @@
+{
+  "name": "ctf-bot",
+  "version": "1.0.0",
+  "description": "CTF Bot - visits the web app with a FLAG cookie",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^22.0.0"
+  }
+}

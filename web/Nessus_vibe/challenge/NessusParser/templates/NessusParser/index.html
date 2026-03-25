@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nessus Parser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Navigation Bar */
+        .top-navbar {
+            background: #1976D2;
+            color: white;
+            padding: 0 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .top-navbar h1 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-upload-nav {
+            background: white;
+            color: #1976D2;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-upload-nav:hover {
+            background: #f0f0f0;
+        }
+
+        /* Layout Container */
+        .layout-container {
+            display: flex;
+            margin-top: 60px;
+            height: calc(100vh - 60px);
+        }
+
+        /* Left Sidebar */
+        .left-sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            background: #fafafa;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .severity-filters {
+            display: flex;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .severity-filter-btn {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .severity-filter-btn.active {
+            background: #1976D2;
+            color: white;
+            border-color: #1976D2;
+        }
+
+        .completion-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .completion-btn {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .completion-btn:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+
+        .completion-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .select-all-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-select-all {
+            flex: 1;
+            padding: 0.5rem;
+            background: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-select-all:hover {
+            background: #1565C0;
+        }
+
+        .btn-deselect-all {
+            flex: 1;
+            padding: 0.5rem;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-deselect-all:hover {
+            background: #555;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .vuln-list-item.hidden {
+            display: none;
+        }
+
+        .vuln-list {
+            list-style: none;
+        }
+
+        .vuln-list-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .vuln-list-item:hover {
+            background: #f9f9f9;
+        }
+
+        .vuln-list-item.selected {
+            background: #e3f2fd;
+            border-left: 3px solid #1976D2;
+        }
+
+        .vuln-list-item.completed {
+            opacity: 0.5;
+            background: #f9f9f9;
+        }
+
+        .vuln-list-item.hidden-completed {
+            display: none;
+        }
+
+        .severity-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .vuln-list-title {
+            font-size: 0.875rem;
+            color: #333;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .vuln-checkbox {
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .content-header {
+            padding: 1.5rem 2rem;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-header h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .selection-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .content-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Table Customization Toolbar */
+        .table-customization {
+            padding: 1rem 1.5rem;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .customization-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .customization-header h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .group-by-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .group-by-section label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .group-by-select {
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .btn-add-column {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-add-column:hover {
+            background: #45a049;
+        }
+
+        .columns-config {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .column-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .column-number {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #666;
+            min-width: 20px;
+        }
+
+        .column-select {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .btn-remove-column {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-remove-column:hover {
+            background: #da190b;
+        }
+
+        /* Vulnerability Details Panel */
+        .vuln-details-panel {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .vuln-details-header {
+            padding: 1rem 1.5rem;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .vuln-details-header:hover {
+            background: #f5f5f5;
+        }
+
+        .vuln-details-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .toggle-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .vuln-details-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .vuln-details-content.expanded {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .vuln-selector {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .vuln-selector label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+            margin-right: 0.75rem;
+        }
+
+        .vuln-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            min-width: 300px;
+        }
+
+        .vuln-info {
+            padding: 1.5rem;
+        }
+
+        .info-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            padding: 0.75rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .info-item-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-item-value {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .btn-export {
+            color: white;
+            background: #1976D2;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-export:hover {
+            background: #1565C0;
+        }
+
+        .btn-export:active{
+            background-color: #1565C0;
+            transform: translateY(4px);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #fafafa;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #555;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.875rem;
+        }
+
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .no-selection {
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #999;
+        }
+
+        .no-vuln-selected {
+            padding: 2rem;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-content.wide {
+            max-width: 600px;
+        }
+
+        .scan-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .scan-item {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .scan-item:hover {
+            background: #f5f5f5;
+        }
+
+        .btn-delete-scan-item {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-delete-scan-item:hover {
+            background: #d32f2f;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .file-upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .file-input {
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-submit {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #1565C0;
+        }
+
+        .messages {
+            position: fixed;
+            top: 70px;
+            right: 1rem;
+            z-index: 1500;
+            max-width: 400px;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .message.success {
+            background: #C8E6C9;
+            color: #2E7D32;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .message.error {
+            background: #FFCDD2;
+            color: #C62828;
+            border-left: 4px solid #F44336;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-navbar">
+        <h1>Nessus Vulnerability Parser</h1>
+        <div class="navbar-actions">
+            <button class="btn-upload-nav" onclick="openUploadModal()">Upload Nessus File</button>
+            <button class="btn-upload-nav" onclick="openProjectsModal()">Projects</button>
+            <button class="btn-upload-nav" onclick="openDeleteScansModal()">Delete Scans</button>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Layout -->
+    <div class="layout-container">
+        <!-- Left Sidebar -->
+        <div class="left-sidebar">
+            <div class="sidebar-header">
+                <h2>Vulnerabilities (<span id="visible-count">{{ vulnerabilities|length }}</span>)</h2>
+                
+                <!-- Project Filter -->
+                <div style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.25rem;">Filter by Project:</label>
+                    <select id="projectFilter" class="search-box" onchange="filterByProject()" style="cursor: pointer;">
+                        <option value="">All Projects</option>
+                    </select>
+                </div>
+                
+                <!-- Search Box -->
+                <input type="text" id="searchBox" class="search-box" placeholder="Search vulnerabilities..." oninput="filterVulnerabilities()">
+                
+                <!-- Severity Filters -->
+                <div class="severity-filters">
+                    <button class="severity-filter-btn active" data-severity="all" onclick="toggleSeverityFilter('all')">All</button>
+                    <button class="severity-filter-btn" data-severity="4" onclick="toggleSeverityFilter('4')">Critical</button>
+                    <button class="severity-filter-btn" data-severity="3" onclick="toggleSeverityFilter('3')">High</button>
+                    <button class="severity-filter-btn" data-severity="2" onclick="toggleSeverityFilter('2')">Medium</button>
+                    <button class="severity-filter-btn" data-severity="1" onclick="toggleSeverityFilter('1')">Low</button>
+                    <button class="severity-filter-btn" data-severity="0" onclick="toggleSeverityFilter('0')">Info</button>
+                </div>
+                
+                <!-- Completion Controls -->
+                <div class="completion-controls">
+                    <button class="completion-btn" onclick="toggleSelectedCompletion()">Toggle Completed</button>
+                    <button class="completion-btn" id="hideCompletedBtn" onclick="toggleHideCompleted()">Hide Completed</button>
+                    <button class="completion-btn" id="showOnlyCompletedBtn" onclick="toggleShowOnlyCompleted()">Show Only Completed</button>
+                </div>
+                
+                <!-- Select All/Deselect All Buttons -->
+                <div class="select-all-container">
+                    <button class="btn-select-all" onclick="selectAllVisible()">Select All</button>
+                    <button class="btn-deselect-all" onclick="deselectAll()">Deselect All</button>
+                </div>
+            </div>
+            <div class="sidebar-content">
+                {% if vulnerabilities %}
+                <ul class="vuln-list">
+                    {% for vuln in vulnerabilities %}
+                    <li class="vuln-list-item" data-vuln-id="{{ vuln.id }}" data-severity="{{ vuln.severity }}" data-name="{{ vuln.plugin_name|lower }}" onclick="toggleVulnSelection({{ vuln.id }})">
+                        <div class="severity-indicator" style="background-color: {{ vuln.get_severity_color }};"></div>
+                        <div class="vuln-list-title">{{ vuln.plugin_name }}</div>
+                        <input type="checkbox" class="vuln-checkbox" id="vuln-{{ vuln.id }}" onclick="event.stopPropagation()">
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="no-selection">
+                    <p>No vulnerabilities found. Upload a Nessus XML file to get started.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h2>Port and IP Address Table</h2>
+                <div class="selection-info">
+                    <span id="selection-count">0</span> vulnerabilities selected
+                </div>
+            </div>
+            <div class="content-body">
+                <!-- Vulnerability Details Panel -->
+                <div class="vuln-details-panel">
+                    <div class="vuln-details-header" onclick="toggleDetailsPanel()">
+                        <h3>Vulnerability Details</h3>
+                        <span class="toggle-icon" id="details-toggle">▼</span>
+                    </div>
+                    <div class="vuln-details-content" id="details-content">
+                        <div class="vuln-selector">
+                            <label for="vuln-details-select">Select Vulnerability:</label>
+                            <select id="vuln-details-select" class="vuln-select" onchange="displayVulnDetails()">
+                                <option value="">-- Select a vulnerability --</option>
+                            </select>
+                        </div>
+                        <div id="vuln-details-info">
+                            <div class="no-vuln-selected">
+                                Select a vulnerability from the dropdown above to view its details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Affected Hosts and Ports</h3>
+                        <div class="export-buttons">
+                            <button class="btn-export" onclick="exportAsMarkdown()">Copy as Markdown</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Table Customization Toolbar -->
+                    <div class="table-customization">
+                        <!-- Group By Section -->
+                        <div class="group-by-section">
+                            <label for="group-by-select">Group By:</label>
+                            <select id="group-by-select" class="group-by-select" onchange="updateTable()">
+                                <option value="none">None (Sequential)</option>
+                                <option value="ip">IP Address</option>
+                                <option value="port">Port</option>
+                                <option value="protocol">Protocol</option>
+                            </select>
+                        </div>
+                        
+                        <div class="customization-header">
+                            <h4>Table Columns Configuration</h4>
+                            <button class="btn-add-column" onclick="addColumn()">+ Add Column</button>
+                        </div>
+                        <div class="columns-config" id="columns-config">
+                            <!-- Columns will be added here dynamically -->
+                            <div class="column-item">
+                                <span class="column-number">1.</span>
+                                <select class="column-select" data-column-id="0" onchange="updateTable()">
+                                    <option value="ip">IP Address</option>
+                                    <option value="port">Port</option>
+                                    <option value="protocol">Protocol</option>
+                                    <option value="vulns">Vulnerabilities</option>
+                                </select>
+                                <button class="btn-remove-column" onclick="removeColumn(0)">Remove</button>
+                            </div>
+                            <div class="column-item">
+                                <span class="column-number">2.</span>
+                                <select class="column-select" data-column-id="1" onchange="updateTable()">
+                                    <option value="ip">IP Address</option>
+                                    <option value="port" selected>Port</option>
+                                    <option value="protocol">Protocol</option>
+                                    <option value="vulns">Vulnerabilities</option>
+                                </select>
+                                <button class="btn-remove-column" onclick="removeColumn(1)">Remove</button>
+                            </div>
+                            <div class="column-item">
+                                <span class="column-number">3.</span>
+                                <select class="column-select" data-column-id="2" onchange="updateTable()">
+                                    <option value="ip">IP Address</option>
+                                    <option value="port">Port</option>
+                                    <option value="protocol" selected>Protocol</option>
+                                    <option value="vulns">Vulnerabilities</option>
+                                </select>
+                                <button class="btn-remove-column" onclick="removeColumn(2)">Remove</button>
+                            </div>
+                            <div class="column-item">
+                                <span class="column-number">4.</span>
+                                <select class="column-select" data-column-id="3" onchange="updateTable()">
+                                    <option value="ip">IP Address</option>
+                                    <option value="port">Port</option>
+                                    <option value="protocol">Protocol</option>
+                                    <option value="vulns" selected>Vulnerabilities</option>
+                                </select>
+                                <button class="btn-remove-column" onclick="removeColumn(3)">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="table-content">
+                        <div class="no-selection">
+                            <p>Select one or more vulnerabilities from the left sidebar to view the affected hosts and ports.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload Nessus XML File</h2>
+            </div>
+            <form method="post" enctype="multipart/form-data" class="file-upload-form">
+                {% csrf_token %}
+                <input type="file" name="nessus_file" accept=".xml,.nessus" required class="file-input">
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Upload & Parse</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Scans Modal -->
+    <div id="deleteScansModal" class="modal">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h2>Delete Scans</h2>
+            </div>
+            <div class="scan-list" id="scanList">
+                <p>Loading scans...</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeDeleteScansModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Modal -->
+    <div id="projectsModal" class="modal">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h2>Projects</h2>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <button class="btn-submit" onclick="showCreateProjectForm()">+ New Project</button>
+            </div>
+            
+            <!-- Create Project Form -->
+            <div id="createProjectForm" style="display: none; margin-bottom: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9;">
+                <h3 style="margin-bottom: 0.5rem;">Create New Project</h3>
+                <input type="text" id="newProjectName" placeholder="Project Name" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                <textarea id="newProjectDesc" placeholder="Description (optional)" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid #ddd; border-radius: 4px; min-height: 60px;"></textarea>
+                <button class="btn-submit" onclick="createProject()">Create</button>
+                <button class="btn-cancel" onclick="hideCreateProjectForm()">Cancel</button>
+            </div>
+            
+            <div class="scan-list" id="projectList">
+                <p>Loading projects...</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeProjectsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div id="projectDetailsModal" class="modal">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h2 id="projectDetailsTitle">Project Details</h2>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <button class="btn-submit" onclick="showAddScanForm()">+ Add Scan to Project</button>
+            </div>
+            
+            <!-- Add Scan Form -->
+            <div id="addScanForm" style="display: none; margin-bottom: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9;">
+                <h3 style="margin-bottom: 0.5rem;">Add Scan to Project</h3>
+                <select id="unassignedScansSelect" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="">Loading scans...</option>
+                </select>
+                <button class="btn-submit" onclick="addScanToProject()">Add</button>
+                <button class="btn-cancel" onclick="hideAddScanForm()">Cancel</button>
+            </div>
+            
+            <div class="scan-list" id="projectScansList">
+                <p>Loading scans...</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeProjectDetailsModal()">Back to Projects</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Vulnerability data from Django
+        const vulnerabilities = [
+            {% for vuln in vulnerabilities %}
+            {
+                id: {{ vuln.id }},
+                plugin_id: "{{ vuln.plugin_id|escapejs }}",
+                plugin_name: "{{ vuln.plugin_name|escapejs }}",
+                host: "{{ vuln.host }}",
+                port: "{{ vuln.port }}",
+                protocol: "{{ vuln.protocol }}",
+                severity: {{ vuln.severity }},
+                severity_text: "{{ vuln.get_severity_display_text }}",
+                severity_color: "{{ vuln.get_severity_color }}",
+                cvss: "{{ vuln.cvss_score }}",
+                risk_factor: "{{ vuln.risk_factor|escapejs }}",
+                description: "{{ vuln.description|escapejs }}",
+                solution: "{{ vuln.solution|escapejs }}",
+                plugin_output: "{{ vuln.plugin_output|escapejs }}",
+                scan_id: {{ vuln.scan.id }},
+                project_id: {% if vuln.scan.project %}{{ vuln.scan.project.id }}{% else %}null{% endif %},
+                project_name: "{% if vuln.scan.project %}{{ vuln.scan.project.name|escapejs }}{% endif %}"
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        let selectedVulns = new Set();
+        let activeSeverityFilters = new Set(['all']);
+        let columnIdCounter = 4; // Starting from 4 since we have 4 initial columns
+        let completedVulns = new Set(JSON.parse(localStorage.getItem('completedVulns') || '[]'));
+        let hideCompleted = localStorage.getItem('hideCompleted') === 'true';
+        let showOnlyCompleted = false;
+        let currentProjectFilter = localStorage.getItem('currentProjectFilter') || 'all';
+
+        // Initialize completion states on load
+        document.addEventListener('DOMContentLoaded', function() {
+            completedVulns.forEach(vulnId => {
+                const listItem = document.querySelector(`[data-vuln-id="${vulnId}"]`);
+                if (listItem) {
+                    listItem.classList.add('completed');
+                }
+            });
+            
+            if (hideCompleted) {
+                document.getElementById('hideCompletedBtn').classList.add('active');
+                applyHideCompleted();
+            }
+            
+            // Load project filter dropdown
+            loadProjectFilterDropdown();
+            
+            filterVulnerabilities();
+        });
+
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('active');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+        }
+
+        function loadProjectFilterDropdown() {
+            const dropdown = document.getElementById('projectFilter');
+            const projects = [
+                {% for project in projects %}
+                    { id: {{ project.id }}, name: "{{ project.name|escapejs }}" }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+            
+            // Clear existing options
+            dropdown.innerHTML = '<option value="all">All Projects</option>';
+            
+            // Add "Unassigned" option
+            dropdown.innerHTML += '<option value="unassigned">Unassigned Scans</option>';
+            
+            // Add project options
+            projects.forEach(project => {
+                dropdown.innerHTML += `<option value="${project.id}">${project.name}</option>`;
+            });
+            
+            // Restore saved filter
+            dropdown.value = currentProjectFilter;
+        }
+
+        function filterByProject() {
+            const dropdown = document.getElementById('projectFilter');
+            currentProjectFilter = dropdown.value;
+            localStorage.setItem('currentProjectFilter', currentProjectFilter);
+            filterVulnerabilities();
+        }
+
+        function toggleSelectedCompletion() {
+            if (selectedVulns.size === 0) {
+                alert('Please select at least one vulnerability to toggle completion status.');
+                return;
+            }
+            
+            // Check if any selected vulns are completed
+            let hasCompleted = false;
+            let hasUncompleted = false;
+            
+            selectedVulns.forEach(vulnId => {
+                if (completedVulns.has(vulnId)) {
+                    hasCompleted = true;
+                } else {
+                    hasUncompleted = true;
+                }
+            });
+            
+            // If all are completed, unmark them. Otherwise, mark them all as completed
+            if (hasCompleted && !hasUncompleted) {
+                // All selected are completed - unmark them
+                selectedVulns.forEach(vulnId => {
+                    const listItem = document.querySelector(`[data-vuln-id="${vulnId}"]`);
+                    if (listItem) {
+                        completedVulns.delete(vulnId);
+                        listItem.classList.remove('completed');
+                    }
+                });
+            } else {
+                // Mark all selected as completed (including mixed state)
+                selectedVulns.forEach(vulnId => {
+                    const listItem = document.querySelector(`[data-vuln-id="${vulnId}"]`);
+                    if (listItem) {
+                        completedVulns.add(vulnId);
+                        listItem.classList.add('completed');
+                    }
+                });
+            }
+            
+            localStorage.setItem('completedVulns', JSON.stringify([...completedVulns]));
+            
+            // Deselect all after toggling
+            deselectAll();
+            
+            if (hideCompleted) {
+                applyHideCompleted();
+            }
+            
+            if (showOnlyCompleted) {
+                applyShowOnlyCompleted();
+            }
+            
+            filterVulnerabilities();
+        }
+
+        function toggleHideCompleted() {
+            hideCompleted = !hideCompleted;
+            localStorage.setItem('hideCompleted', hideCompleted.toString());
+            
+            // Disable show only completed if enabling hide completed
+            if (hideCompleted && showOnlyCompleted) {
+                showOnlyCompleted = false;
+                document.getElementById('showOnlyCompletedBtn').classList.remove('active');
+            }
+            
+            const btn = document.getElementById('hideCompletedBtn');
+            if (hideCompleted) {
+                btn.classList.add('active');
+                applyHideCompleted();
+            } else {
+                btn.classList.remove('active');
+                document.querySelectorAll('.vuln-list-item').forEach(item => {
+                    item.classList.remove('hidden-completed');
+                });
+            }
+            
+            filterVulnerabilities();
+        }
+
+        function toggleShowOnlyCompleted() {
+            showOnlyCompleted = !showOnlyCompleted;
+            
+            // Disable hide completed if enabling show only completed
+            if (showOnlyCompleted && hideCompleted) {
+                hideCompleted = false;
+                localStorage.setItem('hideCompleted', 'false');
+                document.getElementById('hideCompletedBtn').classList.remove('active');
+            }
+            
+            const btn = document.getElementById('showOnlyCompletedBtn');
+            if (showOnlyCompleted) {
+                btn.classList.add('active');
+                applyShowOnlyCompleted();
+            } else {
+                btn.classList.remove('active');
+                document.querySelectorAll('.vuln-list-item').forEach(item => {
+                    item.classList.remove('hidden-completed');
+                });
+            }
+            
+            filterVulnerabilities();
+        }
+
+        function applyShowOnlyCompleted() {
+            document.querySelectorAll('.vuln-list-item').forEach(item => {
+                const vulnId = parseInt(item.dataset.vulnId);
+                if (!completedVulns.has(vulnId)) {
+                    item.classList.add('hidden-completed');
+                } else {
+                    item.classList.remove('hidden-completed');
+                }
+            });
+        }
+
+        function applyHideCompleted() {
+            document.querySelectorAll('.vuln-list-item').forEach(item => {
+                const vulnId = parseInt(item.dataset.vulnId);
+                if (completedVulns.has(vulnId)) {
+                    item.classList.add('hidden-completed');
+                } else {
+                    item.classList.remove('hidden-completed');
+                }
+            });
+        }
+
+        function openDeleteScansModal() {
+            document.getElementById('deleteScansModal').classList.add('active');
+            loadScans();
+        }
+
+        function closeDeleteScansModal() {
+            document.getElementById('deleteScansModal').classList.remove('active');
+        }
+
+        async function loadScans() {
+            const scanList = document.getElementById('scanList');
+            scanList.innerHTML = '<p>Loading scans...</p>';
+            
+            try {
+                const response = await fetch('/list-scans/');
+                const data = await response.json();
+                
+                if (data.scans && data.scans.length > 0) {
+                    scanList.innerHTML = data.scans.map(scan => `
+                        <div class="scan-item">
+                            <div>
+                                <strong>${scan.scan_name || 'Unnamed Scan'}</strong>
+                                <br>
+                                <small>Uploaded: ${new Date(scan.upload_date).toLocaleString()}</small>
+                                <br>
+                                <small>${scan.vulnerability_count} vulnerabilities</small>
+                            </div>
+                            <button class="btn-delete-scan-item" onclick="deleteScan(${scan.id})">Delete</button>
+                        </div>
+                    `).join('');
+                } else {
+                    scanList.innerHTML = '<p>No scans found.</p>';
+                }
+            } catch (error) {
+                scanList.innerHTML = '<p>Error loading scans. Please try again.</p>';
+                console.error('Error loading scans:', error);
+            }
+        }
+
+        async function deleteScan(scanId) {
+            if (!confirm('Are you sure you want to delete this scan? This will remove all associated vulnerabilities.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/delete-scan/${scanId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Scan deleted successfully. Reloading...');
+                    window.location.reload();
+                } else {
+                    alert('Error deleting scan: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error deleting scan. Please try again.');
+                console.error('Error deleting scan:', error);
+            }
+        }
+
+        // Project Management Functions
+        let currentProjectId = null;
+
+        function openProjectsModal() {
+            document.getElementById('projectsModal').classList.add('active');
+            loadProjects();
+        }
+
+        function closeProjectsModal() {
+            document.getElementById('projectsModal').classList.remove('active');
+            hideCreateProjectForm();
+        }
+
+        function showCreateProjectForm() {
+            document.getElementById('createProjectForm').style.display = 'block';
+        }
+
+        function hideCreateProjectForm() {
+            document.getElementById('createProjectForm').style.display = 'none';
+            document.getElementById('newProjectName').value = '';
+            document.getElementById('newProjectDesc').value = '';
+        }
+
+        async function loadProjects() {
+            const projectList = document.getElementById('projectList');
+            projectList.innerHTML = '<p>Loading projects...</p>';
+            
+            try {
+                const response = await fetch('/list-projects/');
+                const data = await response.json();
+                
+                if (data.projects && data.projects.length > 0) {
+                    projectList.innerHTML = data.projects.map(project => `
+                        <div class="scan-item">
+                            <div style="flex: 1; cursor: pointer;" onclick="viewProjectDetails(${project.id}, '${project.name.replace(/'/g, "\\'")}')">
+                                <strong>${project.name}</strong>
+                                <br>
+                                <small>${project.description || 'No description'}</small>
+                                <br>
+                                <small>${project.scan_count} scan(s)</small>
+                            </div>
+                            <button class="btn-delete-scan-item" onclick="deleteProject(${project.id})">Delete</button>
+                        </div>
+                    `).join('');
+                } else {
+                    projectList.innerHTML = '<p>No projects found. Create one to get started!</p>';
+                }
+            } catch (error) {
+                projectList.innerHTML = '<p>Error loading projects. Please try again.</p>';
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        async function createProject() {
+            const name = document.getElementById('newProjectName').value.trim();
+            const description = document.getElementById('newProjectDesc').value.trim();
+            
+            if (!name) {
+                alert('Please enter a project name');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/create-project/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({ name, description })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    hideCreateProjectForm();
+                    loadProjects();
+                    loadProjectFilterDropdown(); // Refresh the filter dropdown
+                } else {
+                    alert('Error creating project: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error creating project. Please try again.');
+                console.error('Error creating project:', error);
+            }
+        }
+
+        async function deleteProject(projectId) {
+            if (!confirm('Are you sure you want to delete this project? This will delete ALL scans and vulnerabilities in this project.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/delete-project/${projectId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadProjects();
+                    loadProjectFilterDropdown(); // Refresh the filter dropdown
+                } else {
+                    alert('Error deleting project: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error deleting project. Please try again.');
+                console.error('Error deleting project:', error);
+            }
+        }
+
+        function viewProjectDetails(projectId, projectName) {
+            currentProjectId = projectId;
+            document.getElementById('projectDetailsTitle').textContent = projectName;
+            document.getElementById('projectsModal').classList.remove('active');
+            document.getElementById('projectDetailsModal').classList.add('active');
+            loadProjectScans(projectId);
+        }
+
+        function closeProjectDetailsModal() {
+            document.getElementById('projectDetailsModal').classList.remove('active');
+            hideAddScanForm();
+            document.getElementById('projectsModal').classList.add('active');
+        }
+
+        function showAddScanForm() {
+            document.getElementById('addScanForm').style.display = 'block';
+            loadUnassignedScans();
+        }
+
+        function hideAddScanForm() {
+            document.getElementById('addScanForm').style.display = 'none';
+        }
+
+        async function loadProjectScans(projectId) {
+            const projectScansList = document.getElementById('projectScansList');
+            projectScansList.innerHTML = '<p>Loading scans...</p>';
+            
+            try {
+                const response = await fetch(`/project-scans/${projectId}/`);
+                const data = await response.json();
+                
+                if (data.scans && data.scans.length > 0) {
+                    projectScansList.innerHTML = data.scans.map(scan => `
+                        <div class="scan-item">
+                            <div>
+                                <strong>${scan.scan_name || 'Unnamed Scan'}</strong>
+                                <br>
+                                <small>Uploaded: ${new Date(scan.upload_date).toLocaleString()}</small>
+                                <br>
+                                <small>${scan.vulnerability_count} vulnerabilities</small>
+                            </div>
+                            <button class="btn-delete-scan-item" onclick="removeScanFromProject(${scan.id})">Remove</button>
+                        </div>
+                    `).join('');
+                } else {
+                    projectScansList.innerHTML = '<p>No scans in this project yet.</p>';
+                }
+            } catch (error) {
+                projectScansList.innerHTML = '<p>Error loading scans. Please try again.</p>';
+                console.error('Error loading project scans:', error);
+            }
+        }
+
+        async function loadUnassignedScans() {
+            const select = document.getElementById('unassignedScansSelect');
+            select.innerHTML = '<option value="">Loading...</option>';
+            
+            try {
+                const response = await fetch('/unassigned-scans/');
+                const data = await response.json();
+                
+                if (data.scans && data.scans.length > 0) {
+                    select.innerHTML = '<option value="">Select a scan...</option>' + 
+                        data.scans.map(scan => `
+                            <option value="${scan.id}">${scan.scan_name || scan.filename} (${scan.vulnerability_count} vulns)</option>
+                        `).join('');
+                } else {
+                    select.innerHTML = '<option value="">No unassigned scans available</option>';
+                }
+            } catch (error) {
+                select.innerHTML = '<option value="">Error loading scans</option>';
+                console.error('Error loading unassigned scans:', error);
+            }
+        }
+
+        async function addScanToProject() {
+            const scanId = document.getElementById('unassignedScansSelect').value;
+            
+            if (!scanId) {
+                alert('Please select a scan');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/assign-scan-to-project/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({ 
+                        scan_id: scanId, 
+                        project_id: currentProjectId 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    hideAddScanForm();
+                    loadProjectScans(currentProjectId);
+                    // Reload page to refresh vulnerability list with updated project assignments
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('Error adding scan: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error adding scan. Please try again.');
+                console.error('Error adding scan to project:', error);
+            }
+        }
+
+        async function removeScanFromProject(scanId) {
+            if (!confirm('Remove this scan from the project? The scan will not be deleted.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/assign-scan-to-project/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({ 
+                        scan_id: scanId, 
+                        project_id: null 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadProjectScans(currentProjectId);
+                    // Reload page to refresh vulnerability list with updated project assignments
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('Error removing scan: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error removing scan. Please try again.');
+                console.error('Error removing scan from project:', error);
+            }
+        }
+
+        function toggleVulnSelection(vulnId) {
+            const checkbox = document.getElementById('vuln-' + vulnId);
+            const listItem = document.querySelector(`[data-vuln-id="${vulnId}"]`);
+            
+            // Don't toggle if item is hidden
+            if (listItem.classList.contains('hidden') || listItem.classList.contains('hidden-completed')) return;
+            
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                selectedVulns.add(vulnId);
+                listItem.classList.add('selected');
+            } else {
+                selectedVulns.delete(vulnId);
+                listItem.classList.remove('selected');
+            }
+            
+            updateTable();
+            updateVulnDetailsDropdown();
+        }
+
+        function updateVulnDetailsDropdown() {
+            const select = document.getElementById('vuln-details-select');
+            const selectedVulnIds = Array.from(selectedVulns);
+            
+            // Clear existing options except the first one
+            select.innerHTML = '<option value="">-- Select a vulnerability --</option>';
+            
+            // Add options for selected vulnerabilities
+            selectedVulnIds.forEach(vulnId => {
+                const vuln = vulnerabilities.find(v => v.id === vulnId);
+                if (vuln) {
+                    const option = document.createElement('option');
+                    option.value = vulnId;
+                    option.textContent = `${vuln.host}:${vuln.port} - ${vuln.plugin_name}`;
+                    select.appendChild(option);
+                }
+            });
+            
+            // Clear details if nothing selected
+            if (selectedVulnIds.length === 0) {
+                document.getElementById('vuln-details-info').innerHTML = '<div class="no-vuln-selected">Select a vulnerability from the dropdown above to view its details</div>';
+            }
+        }
+
+        function toggleDetailsPanel() {
+            const content = document.getElementById('details-content');
+            const toggle = document.getElementById('details-toggle');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+            } else {
+                content.classList.add('expanded');
+                toggle.classList.remove('collapsed');
+            }
+        }
+
+        function displayVulnDetails() {
+            const select = document.getElementById('vuln-details-select');
+            const vulnId = parseInt(select.value);
+            const infoDiv = document.getElementById('vuln-details-info');
+            
+            if (!vulnId) {
+                infoDiv.innerHTML = '<div class="no-vuln-selected">Select a vulnerability from the dropdown above to view its details</div>';
+                return;
+            }
+            
+            const vuln = vulnerabilities.find(v => v.id === vulnId);
+            if (!vuln) {
+                infoDiv.innerHTML = '<div class="no-vuln-selected">Vulnerability not found</div>';
+                return;
+            }
+            
+            let html = '<div class="vuln-info">';
+            
+            // Basic Info Grid
+            html += '<div class="info-grid">';
+            html += `<div class="info-item">
+                        <div class="info-item-label">Plugin ID</div>
+                        <div class="info-item-value">${vuln.plugin_id}</div>
+                    </div>`;
+            html += `<div class="info-item">
+                        <div class="info-item-label">Host</div>
+                        <div class="info-item-value">${vuln.host}</div>
+                    </div>`;
+            html += `<div class="info-item">
+                        <div class="info-item-label">Port</div>
+                        <div class="info-item-value">${vuln.port || 'N/A'} / ${vuln.protocol || 'N/A'}</div>
+                    </div>`;
+            html += `<div class="info-item">
+                        <div class="info-item-label">Severity</div>
+                        <div class="info-item-value" style="color: ${vuln.severity_color}; font-weight: 600;">${vuln.severity_text}</div>
+                    </div>`;
+            if (vuln.cvss) {
+                html += `<div class="info-item">
+                            <div class="info-item-label">CVSS Score</div>
+                            <div class="info-item-value">${vuln.cvss}</div>
+                        </div>`;
+            }
+            if (vuln.risk_factor) {
+                html += `<div class="info-item">
+                            <div class="info-item-label">Risk Factor</div>
+                            <div class="info-item-value">${vuln.risk_factor}</div>
+                        </div>`;
+            }
+            html += '</div>';
+            
+            // Plugin Name
+            html += '<div class="info-section">';
+            html += '<div class="info-label">Vulnerability Name</div>';
+            html += `<div class="info-value">${vuln.plugin_name}</div>`;
+            html += '</div>';
+            
+            // Description
+            if (vuln.description) {
+                html += '<div class="info-section">';
+                html += '<div class="info-label">Description</div>';
+                html += `<div class="info-value">${vuln.description}</div>`;
+                html += '</div>';
+            }
+            
+            // Solution
+            if (vuln.solution) {
+                html += '<div class="info-section">';
+                html += '<div class="info-label">Solution</div>';
+                html += `<div class="info-value">${vuln.solution}</div>`;
+                html += '</div>';
+            }
+            
+            // Plugin Output
+            if (vuln.plugin_output) {
+                html += '<div class="info-section">';
+                html += '<div class="info-label">Plugin Output</div>';
+                html += `<div class="info-value">${vuln.plugin_output}</div>`;
+                html += '</div>';
+            }
+            
+            html += '</div>';
+            
+            infoDiv.innerHTML = html;
+        }
+
+        function filterVulnerabilities() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const listItems = document.querySelectorAll('.vuln-list-item');
+            let visibleCount = 0;
+            
+            listItems.forEach(item => {
+                const vulnId = parseInt(item.getAttribute('data-vuln-id'));
+                const vulnName = item.getAttribute('data-name');
+                const severity = item.getAttribute('data-severity');
+                
+                // Find the vulnerability data to check project
+                const vuln = vulnerabilities.find(v => v.id === vulnId);
+                
+                const matchesSearch = vulnName.includes(searchTerm);
+                const matchesSeverity = activeSeverityFilters.has('all') || activeSeverityFilters.has(severity);
+                
+                // Check project filter
+                let matchesProject = true;
+                if (currentProjectFilter !== 'all') {
+                    if (currentProjectFilter === 'unassigned') {
+                        matchesProject = (vuln && vuln.project_id === null);
+                    } else {
+                        matchesProject = (vuln && vuln.project_id === parseInt(currentProjectFilter));
+                    }
+                }
+                
+                // Determine if should be shown based on completion filters
+                let shouldShow = true;
+                if (hideCompleted && completedVulns.has(vulnId)) {
+                    shouldShow = false;
+                }
+                if (showOnlyCompleted && !completedVulns.has(vulnId)) {
+                    shouldShow = false;
+                }
+                
+                if (matchesSearch && matchesSeverity && matchesProject && shouldShow) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            
+            document.getElementById('visible-count').textContent = visibleCount;
+        }
+
+        function toggleSeverityFilter(severity) {
+            const button = document.querySelector(`[data-severity="${severity}"]`);
+            
+            if (severity === 'all') {
+                // Clear all filters and activate "All"
+                activeSeverityFilters.clear();
+                activeSeverityFilters.add('all');
+                document.querySelectorAll('.severity-filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            } else {
+                // Remove "All" if it's active
+                activeSeverityFilters.delete('all');
+                document.querySelector('[data-severity="all"]').classList.remove('active');
+                
+                // Toggle the clicked filter
+                if (activeSeverityFilters.has(severity)) {
+                    activeSeverityFilters.delete(severity);
+                    button.classList.remove('active');
+                } else {
+                    activeSeverityFilters.add(severity);
+                    button.classList.add('active');
+                }
+                
+                // If no filters are active, activate "All"
+                if (activeSeverityFilters.size === 0) {
+                    activeSeverityFilters.add('all');
+                    document.querySelector('[data-severity="all"]').classList.add('active');
+                }
+            }
+            
+            filterVulnerabilities();
+        }
+
+        function selectAllVisible() {
+            const listItems = document.querySelectorAll('.vuln-list-item:not(.hidden)');
+            listItems.forEach(item => {
+                const vulnId = parseInt(item.getAttribute('data-vuln-id'));
+                const checkbox = document.getElementById('vuln-' + vulnId);
+                
+                if (!checkbox.checked) {
+                    checkbox.checked = true;
+                    selectedVulns.add(vulnId);
+                    item.classList.add('selected');
+                }
+            });
+            updateTable();
+        }
+
+        function deselectAll() {
+            const listItems = document.querySelectorAll('.vuln-list-item');
+            listItems.forEach(item => {
+                const vulnId = parseInt(item.getAttribute('data-vuln-id'));
+                const checkbox = document.getElementById('vuln-' + vulnId);
+                
+                checkbox.checked = false;
+                selectedVulns.delete(vulnId);
+                item.classList.remove('selected');
+            });
+            updateTable();
+        }
+
+        function getColumnConfiguration() {
+            const columnSelects = document.querySelectorAll('.column-select');
+            const columns = [];
+            const columnLabels = {
+                'ip': 'IP Address',
+                'port': 'Port',
+                'protocol': 'Protocol',
+                'vulns': 'Vulnerabilities'
+            };
+            
+            columnSelects.forEach((select, index) => {
+                columns.push({
+                    type: select.value,
+                    label: columnLabels[select.value]
+                });
+            });
+            
+            return columns;
+        }
+
+        function addColumn() {
+            const container = document.getElementById('columns-config');
+            const columnCount = document.querySelectorAll('.column-item').length;
+            
+            const columnItem = document.createElement('div');
+            columnItem.className = 'column-item';
+            columnItem.innerHTML = `
+                <span class="column-number">${columnCount + 1}.</span>
+                <select class="column-select" data-column-id="${columnIdCounter}" onchange="updateTable()">
+                    <option value="ip">IP Address</option>
+                    <option value="port">Port</option>
+                    <option value="protocol">Protocol</option>
+                    <option value="vulns">Vulnerabilities</option>
+                </select>
+                <button class="btn-remove-column" onclick="removeColumn(${columnIdCounter})">Remove</button>
+            `;
+            
+            container.appendChild(columnItem);
+            columnIdCounter++;
+            updateTable();
+        }
+
+        function removeColumn(columnId) {
+            const columnItems = document.querySelectorAll('.column-item');
+            
+            // Don't allow removing if only one column left
+            if (columnItems.length <= 1) {
+                alert('You must have at least one column');
+                return;
+            }
+            
+            // Find and remove the column
+            columnItems.forEach(item => {
+                const select = item.querySelector('.column-select');
+                if (select && parseInt(select.getAttribute('data-column-id')) === columnId) {
+                    item.remove();
+                }
+            });
+            
+            // Renumber remaining columns
+            renumberColumns();
+            updateTable();
+        }
+
+        function renumberColumns() {
+            const columnItems = document.querySelectorAll('.column-item');
+            columnItems.forEach((item, index) => {
+                const numberSpan = item.querySelector('.column-number');
+                if (numberSpan) {
+                    numberSpan.textContent = `${index + 1}.`;
+                }
+            });
+        }
+
+        function updateTable() {
+            const count = selectedVulns.size;
+            document.getElementById('selection-count').textContent = count;
+            
+            if (count === 0) {
+                document.getElementById('table-content').innerHTML = `
+                    <div class="no-selection">
+                        <p>Select one or more vulnerabilities from the left sidebar to view the affected hosts and ports.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Get selected vulnerability data
+            const selectedData = vulnerabilities.filter(v => selectedVulns.has(v.id));
+            
+            // Group by host and port
+            const grouped = {};
+            selectedData.forEach(vuln => {
+                const portKey = vuln.port || 'no-port';
+                const key = `${vuln.host}:${portKey}`;
+                if (!grouped[key]) {
+                    grouped[key] = {
+                        host: vuln.host,
+                        port: vuln.port || '',
+                        protocol: vuln.protocol || '',
+                        vulnerabilities: []
+                    };
+                }
+                grouped[key].vulnerabilities.push(vuln.plugin_name);
+            });
+
+            const groupedArray = Object.values(grouped);
+            const columns = getColumnConfiguration();
+            const groupBy = document.getElementById('group-by-select').value;
+
+            // Determine columns to display based on grouping
+            let displayColumns = columns;
+            if (groupBy !== 'none') {
+                // Keep all columns, don't reduce to unique types
+                displayColumns = columns;
+            }
+
+            // Generate table HTML
+            let tableHTML = `
+                <table class="data-table" id="data-table-copy">
+                    <thead>
+                        <tr>
+            `;
+
+            displayColumns.forEach(col => {
+                tableHTML += `<th>${col.label}</th>`;
+            });
+
+            tableHTML += `
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            if (groupBy === 'none') {
+                // Sequential mode - figure out how many columns per item
+                // Count unique column types to determine the pattern
+                const uniqueTypes = new Set(columns.map(c => c.type));
+                const numUniqueTypes = uniqueTypes.size;
+                const itemsPerRow = Math.floor(columns.length / numUniqueTypes);
+                
+                let itemIndex = 0;
+                
+                while (itemIndex < groupedArray.length) {
+                    tableHTML += '<tr>';
+                    
+                    // Fill each "slot" in the row with one complete item
+                    for (let slot = 0; slot < itemsPerRow; slot++) {
+                        if (itemIndex < groupedArray.length) {
+                            const item = groupedArray[itemIndex];
+                            
+                            // For this item, show each field according to column types in this slot
+                            for (let fieldIdx = 0; fieldIdx < numUniqueTypes; fieldIdx++) {
+                                const colIdx = slot * numUniqueTypes + fieldIdx;
+                                if (colIdx < columns.length) {
+                                    tableHTML += getCellValue(item, columns[colIdx].type);
+                                }
+                            }
+                            itemIndex++;
+                        } else {
+                            // Fill remaining columns with empty cells
+                            for (let fieldIdx = 0; fieldIdx < numUniqueTypes; fieldIdx++) {
+                                const colIdx = slot * numUniqueTypes + fieldIdx;
+                                if (colIdx < columns.length) {
+                                    tableHTML += '<td></td>';
+                                }
+                            }
+                        }
+                    }
+                    
+                    tableHTML += '</tr>';
+                }
+            } else {
+                // Group by mode - spread grouped data across multiple column sets
+                const groupedData = groupDataBy(groupedArray, groupBy);
+                
+                // Figure out the column pattern (how many unique types)
+                const uniqueTypes = new Set(displayColumns.map(c => c.type));
+                const numUniqueTypes = uniqueTypes.size;
+                const groupsPerRow = Math.floor(displayColumns.length / numUniqueTypes);
+                
+                let groupIndex = 0;
+                
+                while (groupIndex < groupedData.length) {
+                    tableHTML += '<tr>';
+                    
+                    // Fill each "slot" in the row with one group
+                    for (let slot = 0; slot < groupsPerRow; slot++) {
+                        if (groupIndex < groupedData.length) {
+                            const group = groupedData[groupIndex];
+                            
+                            // For this group, show each field according to column types in this slot
+                            for (let fieldIdx = 0; fieldIdx < numUniqueTypes; fieldIdx++) {
+                                const colIdx = slot * numUniqueTypes + fieldIdx;
+                                if (colIdx < displayColumns.length) {
+                                    const col = displayColumns[colIdx];
+                                    
+                                    if (col.type === groupBy) {
+                                        tableHTML += `<td>${group.key}</td>`;
+                                    } else {
+                                        const values = group.items.map(item => getCellValueText(item, col.type)).filter(v => v && v !== '/');
+                                        const uniqueValues = [...new Set(values)];
+                                        tableHTML += `<td>${uniqueValues.join(', ') || '/'}</td>`;
+                                    }
+                                }
+                            }
+                            groupIndex++;
+                        } else {
+                            // Fill remaining columns with empty cells
+                            for (let fieldIdx = 0; fieldIdx < numUniqueTypes; fieldIdx++) {
+                                const colIdx = slot * numUniqueTypes + fieldIdx;
+                                if (colIdx < displayColumns.length) {
+                                    tableHTML += '<td></td>';
+                                }
+                            }
+                        }
+                    }
+                    
+                    tableHTML += '</tr>';
+                }
+            }
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('table-content').innerHTML = tableHTML;
+        }
+
+        function getCellValue(item, type) {
+            switch(type) {
+                case 'ip':
+                    return `<td>${item.host}</td>`;
+                case 'port':
+                    return `<td>${item.port || '/'}</td>`;
+                case 'protocol':
+                    return `<td>${item.protocol || '/'}</td>`;
+                case 'vulns':
+                    return `<td>${item.vulnerabilities.length}</td>`;
+                default:
+                    return '<td></td>';
+            }
+        }
+
+        function groupDataBy(dataArray, groupByField) {
+            const groups = {};
+            
+            dataArray.forEach(item => {
+                let key;
+                switch(groupByField) {
+                    case 'ip':
+                        key = item.host;
+                        break;
+                    case 'port':
+                        key = item.port || '/';
+                        break;
+                    case 'protocol':
+                        key = item.protocol || '/';
+                        break;
+                    default:
+                        key = 'Unknown';
+                }
+                
+                if (!groups[key]) {
+                    groups[key] = [];
+                }
+                groups[key].push(item);
+            });
+            
+            // Convert to array format
+            return Object.keys(groups).map(key => ({
+                key: key,
+                items: groups[key]
+            }));
+        }
+
+        function exportAsMarkdown() {
+            if (selectedVulns.size === 0) {
+                alert('Please select at least one vulnerability');
+                return;
+            }
+
+                        
+            let markdown = "| "
+            let lowerPart = "| "
+            var x = document.getElementById("data-table-copy").tHead.rows[0].getElementsByTagName("th");
+            for(i = 0; i < x.length; i++){
+                markdown += x[i].innerHTML + " |"
+                lowerPart += "---|"
+                
+            }
+            markdown += "\n"
+            lowerPart += "\n"
+            markdown += lowerPart
+            var y = document.getElementById("data-table-copy").tBodies[0].rows;
+            for(a = 0; a < y.length; a++){
+                let z = y[a].getElementsByTagName("td");
+                markdown += "|"
+                for(b = 0; b < z.length; b++){
+                    markdown += z[b].innerHTML + " |"
+                }
+                markdown += "\n"
+            }
+
+            
+            navigator.clipboard.writeText(markdown)
+        }
+
+        
+        // Težava pri kopiranju v excel in word zaradi presledkov v naslovih.
+
+        // function exportAsTable() {
+        //     if (selectedVulns.size === 0) {
+        //         alert('Please select at least one vulnerability');
+        //         return;
+        //     }
+
+        //     let tableText = ""
+        //     var x = document.getElementById("data-table-copy").tHead.rows[0].getElementsByTagName("th");
+        //     for(i = 0; i < x.length; i++){
+        //         tableText += x[i].innerHTML + " "
+                
+        //     }
+        //     tableText += "\n"
+        //     var y = document.getElementById("data-table-copy").tBodies[0].rows;
+        //     for(a = 0; a < y.length; a++){
+        //         let z = y[a].getElementsByTagName("td");
+        //         for(b = 0; b < z.length; b++){
+        //             tableText += z[b].innerHTML + " "
+        //         }
+        //         tableText += "\n"
+        //     }
+            
+        //     navigator.clipboard.writeText(tableText).then(() => {
+        //         alert('Table copied! You can paste it into Word or Excel.');
+        //     });
+        // }
+
+        function getCellValueText(item, type) {
+            switch(type) {
+                case 'ip':
+                    return item.host;
+                case 'port':
+                    return item.port || '/';
+                case 'protocol':
+                    return item.protocol || '/';
+                case 'vulns':
+                    return item.vulnerabilities.length.toString();
+                default:
+                    return '';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('uploadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUploadModal();
+            }
+        });
+    </script>
+</body>
+</html>

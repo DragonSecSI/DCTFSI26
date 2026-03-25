@@ -1,0 +1,43 @@
+name: "Outside The Box"
+author: "xRedCrystalx"
+category: "misc"
+description: |
+  Our developer wrote a simple Python program that prints your age inside a nicely formatted ASCII box.
+  You can choose how wide the box should be. Sounds harmless, right?
+
+attribution: "xRedCrystalx"
+value: 1
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{errored_or_brute_forced?}"
+  flag_type: "7"
+  challenge_type: "socket"
+  duration: 300
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "pwn"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/misc/outside-the-box
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+    flag.envkey=FLAG
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+
+tags:
+- misc
+- python
+
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

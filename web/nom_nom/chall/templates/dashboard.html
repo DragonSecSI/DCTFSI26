@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard reveal">
+    <article class="panel panel-wide">
+        <p class="eyebrow">Account dashboard</p>
+        <h1>Hello, {{ user['email'] }}</h1>
+        <p>Welcome to your kitchen dashboard. Your session is active and your tray is ready.</p>
+
+        {% if show_flag and flag %}
+            <div class="flag-card">
+                <h2>Chef's Secret Special</h2>
+                <code>{{ flag }}</code>
+            </div>
+        {% else %}
+            <div class="menu-grid">
+                <div>
+                    <h3>House Rule</h3>
+                    <p>Your account is active, but this tray is a standard customer profile.</p>
+                </div>
+                <div>
+                    <h3>Password Safety</h3>
+                    <p>Need a reset? Use the password recovery route in the top navigation.</p>
+                </div>
+                <div>
+                    <h3>Kitchen Motto</h3>
+                    <p>Every sandwich has a first layer, a filling, and a final layer.</p>
+                </div>
+            </div>
+        {% endif %}
+    </article>
+</section>
+{% endblock %}

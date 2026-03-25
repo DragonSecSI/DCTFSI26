@@ -1,0 +1,19 @@
+{
+    "mesonbuild.configureOptions": [
+        "--native-file=meson-local-gcc.ini"
+    ],
+    "mesonbuild.configureEnvironment": {
+        "CC": "${workspaceFolder}/build_gcc/bin/bin/gcc",
+        "CXX": "${workspaceFolder}/build_gcc/bin/bin/g++",
+        "AR": "${workspaceFolder}/build_gcc/bin/bin/gcc-ar",
+        "NM": "${workspaceFolder}/build_gcc/bin/bin/gcc-nm",
+        "RANLIB": "${workspaceFolder}/build_gcc/bin/bin/gcc-ranlib"
+    },
+    "mesonbuild.configureOnOpen": true,
+    "terminal.integrated.env.linux": {
+        "PATH": "${workspaceFolder}/build_gcc/bin/bin:${env:PATH}"
+    },
+    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
+    "C_Cpp.default.compileCommands": "/home/riggle/ctf/2026/dctfsi-2026/modern/builddir/compile_commands.json",
+    "C_Cpp.clang_format_style": "Google",
+}

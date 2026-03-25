@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baka Lena's Pantry – Homemade Jams &amp; Kompot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="top-bar">
+    <marquee behavior="scroll" direction="left" scrollamount="3">
+        🍓 Fresh batch of strawberry jam just arrived! &nbsp;&nbsp;&nbsp; 🍒 Cherry kompot – limited stock! &nbsp;&nbsp;&nbsp; 🍑 Apricot season is HERE! &nbsp;&nbsp;&nbsp; Free local delivery on orders over 15€ 🛒
+    </marquee>
+</div>
+
+<div id="header">
+    <div class="container">
+        <div id="header-inner">
+            <div id="logo-area">
+                <span id="logo-jar">🫙</span>
+                <div>
+                    <h1 id="site-title">Baka Lena's Pantry</h1>
+                    <p id="site-tagline"><em>"Buying from Baka Lena's Pantry is the best move. But what is the second-best move?"</em></p>
+                </div>
+            </div>
+            <div id="header-nav">
+                <a href="{{ url_for('index') }}" class="nav-btn">🏠 Shop</a>
+                <a href="{{ url_for('view_cart') }}" class="nav-btn cart-btn">
+                    🛒 Cart
+                    {% if cart_count is defined and cart_count > 0 %}
+                        <span class="cart-badge">{{ cart_count }}</span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ribbon">
+    <div class="container">
+        🌿 &nbsp; All natural &nbsp; · &nbsp; No preservatives &nbsp; · &nbsp; Grandma-approved &nbsp; 🌿
+    </div>
+</div>
+
+<div id="main-content" class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 text-center">
+                <p id="footer-logo">🫙</p>
+                <p><small>© 2011 Baka Lena's Pantry<br>All jars lovingly hand-sealed.</small></p>
+            </div>
+        </div>
+        <hr>
+        <p class="text-center"><small>Best viewed in Internet Explorer 9 · 1024×768 resolution recommended</small></p>
+    </div>
+</div>
+
+</body>
+</html>

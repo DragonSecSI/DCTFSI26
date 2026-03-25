@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="single-panel reveal">
+    <div class="panel panel-wide">
+        <p class="eyebrow">Password recovery</p>
+        <h1>Request a reset sandwich</h1>
+        <p>Enter your account email and we will ship a fresh reset link from the kitchen line.</p>
+
+        <form method="post" autocomplete="off">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+            <button type="submit">Send Reset Link</button>
+        </form>
+
+        <div class="inline-illustration">
+            <img src="{{ url_for('static', filename='images/sandwich-right.svg') }}" alt="Sandwich reset illustration">
+        </div>
+
+        <p class="hint">Kitchen hint: reset sandwiches leave the oven in strict sequence. Two slices can tell a lot about the filling in-between.</p>
+    </div>
+</section>
+{% endblock %}

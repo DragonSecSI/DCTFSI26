@@ -1,0 +1,26 @@
+name: "Camels and Dragons"
+author: "klmn"
+category: "rev"
+description: |
+  Dragon's Solitaire is a card game played with 5 suits (R|W|B|Y|G) of 14 ranks (0-13) and 11 stacks.
+  The game starts with 7 cards in each of the first 10 stacks.
+  The goal is to burn all the cards respecting the following rules:
+  1. You can BURN the top card of a stack if its rank is the smallest among all cards of the same suit still in play.
+  2. You can MOVE the top card of one stack onto another stack if the destination is empty OR the destination top card has the same suit and a rank differing by at most 1.
+attribution: "klmn"
+value: 25
+logic: any
+type: "standard"
+
+flags:
+- "dctf{7H3R3_15_4_B1G_5h4RK_1n_JUV15_dUNg30N}"
+
+tags:
+- rev
+- hard
+
+files:
+- dragon
+
+state: visible
+version: "1.0"

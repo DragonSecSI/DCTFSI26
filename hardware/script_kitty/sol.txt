@@ -1,0 +1,6 @@
+Open the Mouse app, and find the Flag script. 
+It draws the flag text by holding the middle mouse button. 
+You can:
+- Write a script that draws if MMB is pressed
+- Wireshark the HID data
+- Open MSPaint, hold LMB and try to decipher it

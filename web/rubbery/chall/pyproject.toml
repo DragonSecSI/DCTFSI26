@@ -1,0 +1,10 @@
+[project]
+name = "mydown-playground"
+version = "0.1.0"
+dependencies = [
+    "fastapi==0.104.1",
+    "markdown>=3.9",
+    "pygments>=2.19.2",
+    "python-multipart>=0.0.20",
+    "uvicorn>=0.36.0",
+]

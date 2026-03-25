@@ -1,0 +1,24 @@
+name: "The Voices"
+author: "SaraGalaxy33"
+category: "misc"
+description: |
+  The audiophile are using their fancy equipment and are claiming the see something wrong.
+
+attribution: "SaraGalaxy33"
+value: 10
+logic: any
+type: "standard"
+
+flags:
+- "dctf{1_533_50und}"
+
+tags:
+- misc
+- medium
+- steganography
+
+files:
+- SZ_1.avi
+
+state: visible
+version: "1.0"

@@ -1,0 +1,25 @@
+name: "Message in a Keystack"
+author: "klmn"
+category: "crypto"
+description: |
+  Unconditional security, perfect secrecy, unconditionally secure MACs,
+  all that information-theoretically unbreakable bla-bla... yeah, sure.
+
+attribution: "klmn"
+value: 5
+logic: any
+type: "standard"
+
+flags:
+- "dctf{2075238366387397281}"
+
+tags:
+- crypto
+- easy
+
+files:
+- haystack.txt
+- haystack.py
+
+state: visible
+version: "1.0"

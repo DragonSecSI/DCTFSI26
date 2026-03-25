@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="welcome-banner">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Welcome to Baka Lena's Online Pantry! <span>🫙</span></h2>
+            <p>
+                Hello, dear visitor! I am Lena, and I have been making jams and kompots
+                in my little kitchen for over 30 years. Everything you see here is made
+                from fruit I grow myself or pick from the hills behind our village.
+                No factories. No chemicals. Just fruit, sugar, and a lot of love.
+            </p>
+            <p><em>Order before Thursday and I will have it ready by the weekend!</em></p>
+        </div>
+        <div class="col-sm-4 text-center" id="grandma-photo-col">
+            <div id="grandma-photo">
+                <span>👵</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divider-strip">~ ~ ~ Our Homemade Goods ~ ~ ~</div>
+
+<div class="row" id="products-row">
+    {% for pid, product in products.items() %}
+    <div class="col-sm-6 col-md-4">
+        <div class="product-card">
+            <div class="product-emoji">{{ product.emoji }}</div>
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-desc">{{ product.desc }}</p>
+            <div class="product-footer">
+                <span class="product-price">€{{ "%.2f"|format(product.price) }}</span>
+                <form action="{{ url_for('add_to_cart', product_id=pid) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="add-btn">Add to Cart 🛒</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="trust-strip" class="row text-center">
+    <div class="col-sm-3">
+        <div class="trust-item">🌱<br><strong>Garden Fresh</strong><br><small>Fruits from our own garden</small></div>
+    </div>
+    <div class="col-sm-3">
+        <div class="trust-item">🚫<br><strong>No Additives</strong><br><small>Just fruit & sugar</small></div>
+    </div>
+    <div class="col-sm-3">
+        <div class="trust-item">🏺<br><strong>Glass Jars</strong><br><small>Reusable, returnable</small></div>
+    </div>
+    <div class="col-sm-3">
+        <div class="trust-item">🚚<br><strong>Local Delivery</strong><br><small>Ljubljana &amp; surroundings</small></div>
+    </div>
+</div>
+
+{% endblock %}

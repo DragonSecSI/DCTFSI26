@@ -1,0 +1,39 @@
+name: "Silicon"
+author: "Foobar"
+category: "hardware"
+description: |
+  Lets learn a thing or two about how the industry designs CPUs
+
+  Note: This challenge is does not need a board!
+attribution: "Foobar"
+value: 50
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{custom_silicon_is_fun}"
+  flag_type: "7"
+  challenge_type: "socket"
+  duration: 600
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "pwn"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/pwn/silicon
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- "dctf{custom_silicon_is_fun}"
+tags:
+- pwn
+- insane
+- hardware
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

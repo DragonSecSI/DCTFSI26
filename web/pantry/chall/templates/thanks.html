@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% set cart_count = 0 %}
+{% block content %}
+
+<div class="thanks-wrap">
+
+    <!-- Big confirmation header -->
+    <div class="thanks-header">
+        <div class="thanks-jars">🫙&thinsp;🍓&thinsp;🫙</div>
+        <h2>Order received, {{ name or "dear friend" }}!</h2>
+        <p class="thanks-sub">
+            Baka Lena has your order written down in her little notebook.<br>
+            She will call you on <strong>{{ phone }}</strong> to confirm delivery.
+        </p>
+    </div>
+
+    <div class="row thanks-body">
+
+        <!-- Left: order summary -->
+        <div class="col-sm-7">
+            <div class="thanks-section">
+                <h4 class="thanks-section-title">📦 What you ordered</h4>
+                <table class="table table-bordered thanks-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-right">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.product.emoji }} {{ item.product.name }}</td>
+                            <td class="text-center">{{ item.qty }}</td>
+                            <td class="text-right">€{{ "%.2f"|format(item.subtotal) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-right"><strong>Total:</strong></td>
+                            <td class="text-right"><strong>€{{ "%.2f"|format(total) }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <p class="cod-note">💵 <strong>Payment:</strong> Cash on delivery</p>
+            </div>
+        </div>
+
+        <!-- Right: delivery details -->
+        <div class="col-sm-5">
+            <div class="thanks-section">
+                <h4 class="thanks-section-title">🚚 Delivery details</h4>
+                <dl class="delivery-dl">
+                    <dt>Name</dt>
+                    <dd>{{ name or "—" }}</dd>
+                    <dt>Phone</dt>
+                    <dd>{{ phone or "—" }}</dd>
+                    <dt>Address</dt>
+                    <dd>{{ address or "—" }}</dd>
+                    {% if notes %}
+                    <dt>Special requests</dt>
+                    <dd><em>{{ notes }}</em></dd>
+                    {% endif %}
+                </dl>
+            </div>
+
+            <!-- Grandma's handwritten note -->
+            <div class="lena-note-card">
+                <p>
+                    <em>
+                        "Thank you so much, {{ name.split()[0] if name else "dear" }}!
+                        I will pack your order with care and call you soon.
+                        May these jars bring sweetness to your home! 🍯"
+                    </em>
+                </p>
+                <p class="lena-sig">— Baka Lena</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- What happens next -->
+    <div class="thanks-steps">
+        <h4 class="thanks-section-title" style="margin-bottom: 16px;">🗓 What happens next?</h4>
+        <div class="row text-center">
+            <div class="col-sm-3">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-icon">📝</div>
+                    <div class="step-label">Lena notes<br>your order</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-icon">📞</div>
+                    <div class="step-label">She calls to<br>confirm</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-icon">🫙</div>
+                    <div class="step-label">Jars are<br>packed</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-icon">🚗</div>
+                    <div class="step-label">Delivered<br>to your door</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 28px;">
+        <a href="{{ url_for('index') }}" class="add-btn">← Back to Shop</a>
+    </div>
+
+</div>
+
+{% endblock %}

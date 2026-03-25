@@ -1,0 +1,24 @@
+name: "No Key Cryptography"
+author: "klmn"
+category: "crypto"
+description: |
+  I came up with half-time padding encryption.
+
+attribution: "klmn"
+value: 10
+logic: any
+type: "standard"
+
+flags:
+- "dctf{st4t15T1c4L_4NA1Y5I5_fTW}"
+
+tags:
+- crypto
+- medium
+
+files:
+- output.txt
+- gen.py
+
+state: visible
+version: "1.0"

@@ -1,0 +1,30 @@
+name: "KRIPTOGRAFIJA 1944"
+author: "klmn"
+category: "crypto"
+description: |
+  I am almost certain that this is the only digital copy of the this document.
+  Do you know how to read? There is someting on the page 12, if you can't read.
+
+  Note: Wrap the solution text in the flag format -> dctf{SOLUTION}.
+
+  Note 2: There is a typo in the flag! If it looks like the flag but with a minor linguistic typo, it's still correct.
+
+attribution: "klmn"
+value: 1
+logic: any
+type: "standard"
+
+flags:
+- "dctf{DRAGONSECINTELIGENCEANGENCY}"
+- "dctf{DRAGONSECINTELIGENCEANGENCU}"
+
+tags:
+- crypto
+- baby
+
+files:
+- ciphertext.jpeg
+- 1944.pdf
+
+state: visible
+version: "1.0"

@@ -1,0 +1,24 @@
+name: "Password Checker 10000"
+author: "zen"
+category: "hardware"
+description: |
+  Finally, I've completed my correct and secure password checker!
+  It'll check your password a few extra times, just to be sure.
+
+attribution: "zen"
+value: 25
+logic: any
+type: "standard"
+
+flags:
+- "dctf{OMG_LooK_H4nnEs_A_s1dE_cHannL_aTTaCK}"
+
+tags:
+- hardware
+- hard
+
+files:
+- SettingsScreenView.cpp
+
+state: visible
+version: "1.0"

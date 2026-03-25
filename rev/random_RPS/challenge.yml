@@ -1,0 +1,28 @@
+name: "Random RPS"
+author: "klmn"
+category: "rev"
+description: |
+  Can you beat the odds when they're stacked against you?
+attribution: "klmn"
+value: 10
+logic: any
+type: "standard"
+
+flags:
+- "dctf{1_H473_m47H3m471cs_4nD_crYp709R4pHY}"
+
+tags:
+- rev
+- medium
+
+files:
+- game-linux-x86_64
+- game-linux-aarch64
+- game-linux-arm
+- game-macos-x86_64
+- game-macos-aarch64
+- game-freebsd-x86_64
+- game-freebsd-aarch64
+
+state: visible
+version: "1.0"

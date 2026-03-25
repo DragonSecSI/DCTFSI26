@@ -1,0 +1,24 @@
+name: "Flappy Dragon"
+author: "zen"
+category: "hardware"
+description: |
+  Got any games on your phone?
+
+attribution: "zen"
+value: 10
+logic: any
+type: "standard"
+
+flags:
+- "dctf{2_fAsT_2_fL4ppY}"
+
+tags:
+- hardware
+- medium
+
+files:
+- main.c
+- GameScreenView.cpp
+
+state: visible
+version: "1.0"

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-layout">
+    <div class="story-card">
+        <p class="eyebrow">Freshly toasted access</p>
+        <h1>Welcome back to the Sandwich Lab</h1>
+        <p>Sign in to your account, review your kitchen status, and continue your nom nom mission.</p>
+        <img src="{{ url_for('static', filename='images/sandwich-right.svg') }}" alt="Stacked sandwich illustration">
+    </div>
+    <form class="panel" method="post" autocomplete="off">
+        <h2>Login</h2>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required>
+
+        <button type="submit">Sign In</button>
+        <p class="muted">Forgot your password? <a href="{{ url_for('request_reset') }}">Request a reset</a>.</p>
+        <p class="muted">No account yet? <a href="{{ url_for('register') }}">Create one</a>.</p>
+    </form>
+</section>
+{% endblock %}

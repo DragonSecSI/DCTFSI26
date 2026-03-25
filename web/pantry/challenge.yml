@@ -1,0 +1,43 @@
+name: "pantry"
+author: "franga2000"
+category: "web"
+description: |
+    Perfectly preserved!
+attribution: "franga2000"
+value: 1
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{deliciously_pickled}"
+  flag_type: "7"
+  challenge_type: "web"
+  duration: 300
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "web"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/web/pantry
+    image.tag=latest
+    image.pullPolicy=Always
+    imagePullSecrets[0].name=dctf
+    pod.securityContext.readOnlyRootFilesystem=false
+    pod.securityContext.runAsNonRoot=false
+    pod.securityContext.runAsUser=0
+    pod.securityContext.runAsGroup=0
+    flag.path=/flag.txt
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- web
+- baby
+files:
+- pantry.zip
+
+state: visible
+version: "0.1"

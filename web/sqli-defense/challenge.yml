@@ -1,0 +1,72 @@
+name: "SQL inection defender"
+author: "MartinCo"
+category: "web"
+description: |
+  I made my website safe from SQLi injections by making a sqlite proxy"
+
+  Note: The mysqld instance takes a minute or two to start on the remote
+attribution: "MartinCo"
+value: 10
+logic: any
+type: "instanced"
+extra:
+  flag_base: "dctf{explain_is_pain}"
+  flag_type: "7"
+  challenge_type: "web"
+  duration: 600
+  cooldown: 60
+  repository: "oci://registry:5000/charts"
+  chart: "web-db"
+  chart_version: "0.1.0"
+  values: |
+    image.repository=registry.dctf.si/web/sqli-defense
+    image.tag=latest
+    image.pullPolicy=Always
+    imageDb.repository=mysql
+    imageDb.tag=8.0
+    imageDb.pullPolicy=IfNotPresent
+    imagePullSecrets[0].name=dctf
+    pod.env[0].name=MYSQL_USER
+    pod.env[0].value=app
+    pod.env[1].name=MYSQL_PASSWORD
+    pod.env[1].value=app
+    pod.env[2].name=MYSQL_DATABASE
+    pod.env[2].value=app
+    pod.envhost=MYSQL_HOST
+    db.env[0].name=MYSQL_RANDOM_ROOT_PASSWORD
+    db.env[0].value=yes
+    db.env[1].name=MYSQL_USER
+    db.env[1].value=app
+    db.env[2].name=MYSQL_PASSWORD
+    db.env[2].value=app
+    db.env[3].name=MYSQL_DATABASE
+    db.env[3].value=app
+    volumes[0].name=db
+    volumes[0].path=/app/db
+    volumes[0].size=50Mi
+    volumesDb[0].name=db
+    volumesDb[0].path=/var/lib/mysql
+    volumesDb[0].size=250Mi
+    volumesDb[1].name=tmp
+    volumesDb[1].path=/tmp
+    volumesDb[1].size=50Mi
+    volumesDb[2].name=run
+    volumesDb[2].path=/var/run/mysqld
+    volumesDb[2].size=10Mi
+    flag.envkey=FLAG
+
+
+connection_info: "Use the instancer on the top left corner"
+
+flags:
+- type: "instanced"
+  content: ""
+  data: ""
+tags:
+- web
+- medium
+files:
+- dist.zip
+
+state: visible
+version: "0.1"

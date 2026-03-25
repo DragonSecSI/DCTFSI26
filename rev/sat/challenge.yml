@@ -1,0 +1,22 @@
+name: "SAT"
+author: "Riggle"
+category: "rev"
+
+description: |
+  Yes, it's a SAT challenge. How unexpected.
+
+value: 50
+type: "standard"
+
+files:
+  - "dist/sat"
+
+flags:
+  - "dctf{Ju5t_s0lv3_The_Con5tr4ints!}"
+
+tags:
+  - rev
+  - insane
+
+state: "visible"
+version: "0.1"

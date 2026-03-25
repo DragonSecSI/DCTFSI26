@@ -1,0 +1,25 @@
+Observations:
+
+- The ciphertext is "C0C4A2E0A4B3D1A0B0C1B3E3A0E2C1E0A0B3A1A0A2B3E0A0B3B0E4".
+- Consists only of numbers (0-4) and letters (A-E).
+- There are 5 occurrences of 'A0' and 'B3'.
+- There is only one ciphertext in the whole book, which aligns with these observations.
+
+ | A B C D E
+-+----------
+0| E C D H G
+1| C F I S K
+2| A B J Z L
+3| M N S Z T
+4| O P R V ?
+
+N  A  P  A  D  I  T  E
+B3 A2 B4 A2 C0 C1 E3 A0
+
+The question mark is U, since it is the only missing character to complete
+the Slovenian 25-character alphabet.
+
+If you try to decrypt it you will get:
+DRAGONSEC INTELIGENCE A(N)GENCU
+DRAGONSEC INTELIGENCE A(N)GENCY (also allowed)
+
