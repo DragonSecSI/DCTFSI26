@@ -1,4 +1,4 @@
-DOCKER_IMAGE=registry.dctf.si/pwn/vm-where:latest
+DOCKER_IMAGE=registry.vuln.si/dctf26/pwn/vm-where:latest
 DOCKER_OPTS=--platform=linux/amd64
 
 build:

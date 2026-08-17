@@ -1,6 +1,6 @@
 name: "Random RPS"
 author: "klmn"
-category: "rev"
+category: "Rev"
 description: |
   Can you beat the odds when they're stacked against you?
 attribution: "klmn"
@@ -12,6 +12,7 @@ flags:
 - "dctf{1_H473_m47H3m471cs_4nD_crYp709R4pHY}"
 
 tags:
+- event_dctf26
 - rev
 - medium
 

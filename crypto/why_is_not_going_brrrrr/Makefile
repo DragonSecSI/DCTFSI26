@@ -1,4 +1,4 @@
-DOCKER_IMAGE=registry.dctf.si/crypto/brrr
+DOCKER_IMAGE=registry.vuln.si/dctf26/crypto/brrr
 DOCKER_OPTS=--platform=linux/amd64
 
 build:

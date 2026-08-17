@@ -1,6 +1,6 @@
 name: "VM Where?"
 author: "aJuvan"
-category: "pwn"
+category: "Pwn"
 description: "Can't take this price increases."
 attribution: "aJuvan"
 value: 25
@@ -16,10 +16,10 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/pwn/vm-where
+    image.repository=registry.vuln.si/dctf26/pwn/vm-where
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     flag.path=/app/flag.txt
 
 connection_info: "Use the instancer on the top left corner"
@@ -29,6 +29,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - pwn
 - hard
 files:

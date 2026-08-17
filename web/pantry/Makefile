@@ -1,4 +1,4 @@
-DOCKER_IMAGE=registry.dctf.si/web/pantry
+DOCKER_IMAGE=registry.vuln.si/dctf26/web/pantry
 DOCKER_OPTS=--platform=linux/amd64
 
 build:

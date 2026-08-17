@@ -1,6 +1,6 @@
 name: "Silicon"
 author: "Foobar"
-category: "hardware"
+category: "Hardware"
 description: |
   Lets learn a thing or two about how the industry designs CPUs
 
@@ -19,16 +19,17 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/pwn/silicon
+    image.repository=registry.vuln.si/dctf26/pwn/silicon
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
 
 connection_info: "Use the instancer on the top left corner"
 
 flags:
 - "dctf{custom_silicon_is_fun}"
 tags:
+- event_dctf26
 - pwn
 - insane
 - hardware

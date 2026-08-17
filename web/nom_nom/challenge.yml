@@ -1,6 +1,6 @@
 name: "Nom Nom"
 author: "xRedCrystalx"
-category: "web"
+category: "Web"
 description: |
   The NomNom Sandwich Lab's kitchen is secure - or so they claim.
 
@@ -19,10 +19,10 @@ extra:
   chart: "web"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/web/nom-nom
+    image.repository=registry.vuln.si/dctf26/web/nom-nom
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     pod.env[0].name=SMTP_USER
     pod.env[0].value=noreply@dragonsec.si
     pod.env[1].name=SMTP_PWD
@@ -40,6 +40,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - web
 - hard
 

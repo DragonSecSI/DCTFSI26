@@ -1,4 +1,4 @@
-DOCKER_IMAGE=registry.dctf.si/crypto/applet
+DOCKER_IMAGE=registry.vuln.si/dctf26/crypto/applet
 DOCKER_OPTS=--platform=linux/amd64
 
 build:

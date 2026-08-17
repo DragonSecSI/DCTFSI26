@@ -1,6 +1,6 @@
 name: "debugme"
 author: "Riggle"
-category: "rev"
+category: "Rev"
 
 description: |
   Do I look like I know what a debugger is?
@@ -15,6 +15,7 @@ flags:
   - "dctf{7r4C1N9_c4lls_1S_v3ry_US3fUL_F0r_r3v3Rs3_3n91n33R1ng}"
 
 tags:
+  - event_dctf26
   - rev
   - easy
 

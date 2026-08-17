@@ -1,6 +1,6 @@
 services:
   web:
-    image: registry.dctf.si/web/nessus:latest
+    image: registry.vuln.si/dctf26/web/nessus:latest
     build:
       context: .
       platforms: ["linux/amd64"]
@@ -13,7 +13,7 @@ services:
       - PYTHONUNBUFFERED=1
 
   bot:
-    image: registry.dctf.si/web/nessus:bot
+    image: registry.vuln.si/dctf26/web/nessus:bot
     build:
       context: ./bot
       platforms: ["linux/amd64"]

@@ -1,6 +1,6 @@
 name: "SAT"
 author: "Riggle"
-category: "rev"
+category: "Rev"
 
 description: |
   Yes, it's a SAT challenge. How unexpected.
@@ -15,6 +15,7 @@ flags:
   - "dctf{Ju5t_s0lv3_The_Con5tr4ints!}"
 
 tags:
+  - event_dctf26
   - rev
   - insane
 

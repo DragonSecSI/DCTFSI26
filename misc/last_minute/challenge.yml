@@ -1,6 +1,6 @@
 name: "Last Minute"
 author: "klmn"
-category: "misc"
+category: "Misc"
 description: |
   If functions are pure, the reversing should be easy.
 
@@ -13,6 +13,7 @@ flags:
 - "dctf{14M6D4C4Lc}"
 
 tags:
+- event_dctf26
 - misc
 - hard
 

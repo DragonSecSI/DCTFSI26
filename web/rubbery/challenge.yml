@@ -1,6 +1,6 @@
 name: "Rubbery"
 author: "franga2000"
-category: "web"
+category: "Web"
 description: |
    	I'll make my own markdown! With blackjack and...
 attribution: "franga2000"
@@ -17,10 +17,10 @@ extra:
   chart: "web"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/web/rubbery
+    image.repository=registry.vuln.si/dctf26/web/rubbery
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     pod.securityContext.readOnlyRootFilesystem=false
     pod.securityContext.runAsNonRoot=false
     pod.securityContext.runAsUser=0
@@ -37,6 +37,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - web
 - insane
 files:

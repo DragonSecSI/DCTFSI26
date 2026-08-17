@@ -1,6 +1,6 @@
 name: "mysh"
 author: "VrumVrum"
-category: "pwn"
+category: "Pwn"
 description: "Aaah! Why do windows keep popping up? I will never use GUI again... In fact here is a shell."
 attribution: "VrumVrum"
 value: 10
@@ -16,10 +16,10 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/pwn/mysh
+    image.repository=registry.vuln.si/dctf26/pwn/mysh
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     pod.securityContext.readOnlyRootFilesystem=false
     flag.path=/flag.txt
 
@@ -30,6 +30,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - pwn
 - medium
 files:

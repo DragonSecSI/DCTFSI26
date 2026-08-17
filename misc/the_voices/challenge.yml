@@ -1,6 +1,6 @@
 name: "The Voices"
 author: "SaraGalaxy33"
-category: "misc"
+category: "Misc"
 description: |
   The audiophile are using their fancy equipment and are claiming the see something wrong.
 
@@ -13,6 +13,7 @@ flags:
 - "dctf{1_533_50und}"
 
 tags:
+- event_dctf26
 - misc
 - medium
 - steganography

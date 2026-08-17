@@ -1,6 +1,6 @@
 name: "Camels and Dragons"
 author: "klmn"
-category: "rev"
+category: "Rev"
 description: |
   Dragon's Solitaire is a card game played with 5 suits (R|W|B|Y|G) of 14 ranks (0-13) and 11 stacks.
   The game starts with 7 cards in each of the first 10 stacks.
@@ -16,6 +16,7 @@ flags:
 - "dctf{7H3R3_15_4_B1G_5h4RK_1n_JUV15_dUNg30N}"
 
 tags:
+- event_dctf26
 - rev
 - hard
 

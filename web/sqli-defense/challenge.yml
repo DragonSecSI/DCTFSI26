@@ -1,6 +1,6 @@
-name: "SQL inection defender"
+name: "SQL injection defender"
 author: "MartinCo"
-category: "web"
+category: "Web"
 description: |
   I made my website safe from SQLi injections by making a sqlite proxy"
 
@@ -19,13 +19,13 @@ extra:
   chart: "web-db"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/web/sqli-defense
+    image.repository=registry.vuln.si/dctf26/web/sqli-defense
     image.tag=latest
     image.pullPolicy=Always
     imageDb.repository=mysql
     imageDb.tag=8.0
     imageDb.pullPolicy=IfNotPresent
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     pod.env[0].name=MYSQL_USER
     pod.env[0].value=app
     pod.env[1].name=MYSQL_PASSWORD
@@ -63,6 +63,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - web
 - medium
 files:

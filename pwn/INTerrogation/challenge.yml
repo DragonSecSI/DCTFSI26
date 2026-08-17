@@ -1,6 +1,6 @@
 name: "INTerrogation"
 author: "VrumVrum"
-category: "pwn"
+category: "Pwn"
 description: "It can't take too LONG..."
 attribution: "VrumVrum"
 value: 5
@@ -16,10 +16,10 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/pwn/interrogation
+    image.repository=registry.vuln.si/dctf26/pwn/interrogation
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     flag.path=/flag.txt
 
 connection_info: "Use the instancer on the top left corner"
@@ -29,6 +29,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - pwn
 - easy
 files:

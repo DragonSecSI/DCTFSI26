@@ -12,7 +12,7 @@ services:
       retries: 10
 
   app:
-    image: registry.dctf.si/web/sqli-defense
+    image: registry.vuln.si/dctf26/web/sqli-defense
     build: .
     restart: unless-stopped
     depends_on:

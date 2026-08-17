@@ -1,6 +1,6 @@
 name: "Why is not going brrrrr?"
 author: "klmn"
-category: "crypto"
+category: "Crypto"
 description: |
   Do you know what NLFSR are?
 
@@ -18,10 +18,10 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/crypto/brrr
+    image.repository=registry.vuln.si/dctf26/crypto/brrr
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     flag.envkey=FLAG
 
 connection_info: "Use the instancer on the top left corner"
@@ -31,6 +31,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - crypto
 - hard
 files:

@@ -1,6 +1,6 @@
 name: "Nessus Vibe"
 author: "MartinCp"
-category: "web"
+category: "Web"
 description: "I vibe coded my Nessus parsing application. I think it might have some vulnerabilities?"
 attribution: "MartinCo"
 value: 5
@@ -16,11 +16,11 @@ extra:
   chart: "web-bot"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/web/nessus
+    image.repository=registry.vuln.si/dctf26/web/nessus
     image.tag=latest
     image.bottag=bot
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     pod.volumes[0].name=db
     pod.volumes[0].path=/app/db
     pod.volumes[0].size=100Mi
@@ -40,6 +40,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - web
 - easy
 files:

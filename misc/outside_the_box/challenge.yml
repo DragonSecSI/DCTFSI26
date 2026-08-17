@@ -1,6 +1,6 @@
 name: "Outside The Box"
 author: "xRedCrystalx"
-category: "misc"
+category: "Misc"
 description: |
   Our developer wrote a simple Python program that prints your age inside a nicely formatted ASCII box.
   You can choose how wide the box should be. Sounds harmless, right?
@@ -19,10 +19,10 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/misc/outside-the-box
+    image.repository=registry.vuln.si/dctf26/misc/outside-the-box
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     flag.envkey=FLAG
 
 connection_info: "Use the instancer on the top left corner"
@@ -33,6 +33,7 @@ flags:
   data: ""
 
 tags:
+- event_dctf26
 - misc
 - python
 

@@ -29,6 +29,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - web
 - baby
 files:

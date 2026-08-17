@@ -1,6 +1,6 @@
 name: "Message in a Keystack"
 author: "klmn"
-category: "crypto"
+category: "Crypto"
 description: |
   Unconditional security, perfect secrecy, unconditionally secure MACs,
   all that information-theoretically unbreakable bla-bla... yeah, sure.
@@ -14,6 +14,7 @@ flags:
 - "dctf{2075238366387397281}"
 
 tags:
+- event_dctf26
 - crypto
 - easy
 

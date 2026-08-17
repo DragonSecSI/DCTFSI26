@@ -1,6 +1,6 @@
 name: "KRIPTOGRAFIJA 1944"
 author: "klmn"
-category: "crypto"
+category: "Crypto"
 description: |
   I am almost certain that this is the only digital copy of the this document.
   Do you know how to read? There is someting on the page 12, if you can't read.
@@ -19,6 +19,7 @@ flags:
 - "dctf{DRAGONSECINTELIGENCEANGENCU}"
 
 tags:
+- event_dctf26
 - crypto
 - baby
 

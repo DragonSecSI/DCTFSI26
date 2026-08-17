@@ -1,6 +1,6 @@
 name: "Applet or Nothing"
 author: "klmn"
-category: "crypto"
+category: "Crypto"
 description: |
   Help me to make an applet for a smart card for making RSA signatures.
   Every smart card is suseptable to side-channel attacks, so we do need
@@ -20,10 +20,10 @@ extra:
   chart: "pwn"
   chart_version: "0.1.0"
   values: |
-    image.repository=registry.dctf.si/crypto/applet
+    image.repository=registry.vuln.si/dctf26/crypto/applet
     image.tag=latest
     image.pullPolicy=Always
-    imagePullSecrets[0].name=dctf
+    imagePullSecrets[0].name=vuln
     flag.envkey=FLAG
 
 connection_info: "Use the instancer on the top left corner"
@@ -33,6 +33,7 @@ flags:
   content: ""
   data: ""
 tags:
+- event_dctf26
 - crypto
 - insane
 files:

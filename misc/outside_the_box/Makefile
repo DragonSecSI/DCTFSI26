@@ -1,4 +1,4 @@
-DOCKER_IMAGE=registry.dctf.si/misc/outside-the-box
+DOCKER_IMAGE=registry.vuln.si/dctf26/misc/outside-the-box
 DOCKER_OPTS=--platform=linux/amd64
 
 build:

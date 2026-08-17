@@ -1,6 +1,6 @@
 name: "No Key Cryptography"
 author: "klmn"
-category: "crypto"
+category: "Crypto"
 description: |
   I came up with half-time padding encryption.
 
@@ -13,6 +13,7 @@ flags:
 - "dctf{st4t15T1c4L_4NA1Y5I5_fTW}"
 
 tags:
+- event_dctf26
 - crypto
 - medium
 

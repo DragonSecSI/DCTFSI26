@@ -1,22 +1,17 @@
 name: "Babyrev"
 author: "Riggle"
-category: rev
-
+category: Rev
 description: |
   Reverse the binary!
 value: 1
 type: "standard"
-
 files:
   - "babyrev.tar.gz"
-
 flags:
   - dctf{baby_x0r_plus_add_still_easy_7f3a1c}
-
 tags:
+  - event_dctf26
   - rev
   - baby
-
 state: visible
-
 version: "0.1"

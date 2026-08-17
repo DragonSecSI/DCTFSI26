@@ -1,4 +1,4 @@
-DOCKER_IMAGE=registry.dctf.si/pwn/mysh
+DOCKER_IMAGE=registry.vuln.si/dctf26/pwn/mysh
 DOCKER_OPTS=--platform=linux/amd64
 
 build:
